@@ -3,5 +3,8 @@
     "editor.formatOnSave": true,
     "[ignore]": {
         "editor.defaultFormatter": null
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": null // Formatters ruin markdown.
     }
 }

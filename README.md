@@ -1,53 +1,41 @@
-# Astro Starter Kit: Basics
+# t3h site
 
-```
-npm create astro@latest -- --template basics
-```
+The website, 2023 re-write.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/s/github/withastro/astro/tree/latest/examples/basics)
+## Goals
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Core site goal:
 
-![basics](https://user-images.githubusercontent.com/4677417/186188965-73453154-fdec-4d6b-9c34-cb35c248ae5b.png)
+- Astro 2
+  - Content Collections
+- Use MDX to do custom components for all the markdown
+    - The main purpose of this is nice code components
+        - Maybe look at how Astro docs does it
+    - See if it can be setup to keep astro-specific things like layout out of the posts
+    - It is nice to keep the content framework agnostic
+- Tailwind with dark and light themes
+  - Will make more sense with writing more components
+  - Don't want to use typography plugin
+  - Only dark and light, don't complicate the code for more themes I'll never write
 
-## 🚀 Project Structure
+Extra Goals:
 
-Inside of your Astro project, you'll see the following folders and files:
+- Find an excuse to use Zod
+- Find an excuse to use TanStack Router
+- Find reasons to write React, SolidJS and Svelte components, in islands
 
-```
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Todo
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `npm install`          | Installs dependencies                            |
-| `npm run dev`          | Starts local dev server at `localhost:3000`      |
-| `npm run build`        | Build your production site to `./dist/`          |
-| `npm run preview`      | Preview your build locally, before deploying     |
-| `npm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+[x] IDE config + Forced formatting
+[ ] Delete default stuff
+[ ] Blog page rendering
+    [ ] Any post rendering working
+    [ ] Slug gen page with layout insertion
+[ ] Custom components for markdown rendering using MDX plugin
+    [ ] p
+    [ ] h1 and others
+    [ ] Code with dark and light
+    [ ] Code that can adjust width
+    [ ] Wider bullet lists that don't look weird (or just make the text wider)
+[ ] GitHub actions for deployment

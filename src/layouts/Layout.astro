@@ -1,4 +1,7 @@
 ---
+import HeaderLink from "../components/HeaderLink.astro";
+import { ThemeSwitcher } from "../components/ThemeSwitcher";
+import { SITE_TITLE } from "../config";
 export interface Props {
     title: string;
 }
@@ -19,6 +22,39 @@ const { title } = Astro.props;
     <body
         class="bg-stone-100 text-stone-950 dark:bg-stone-850 dark:text-stone-150"
     >
+        <header
+            class="mb-4 bg-stone-150 py-4 text-stone-900 dark:bg-stone-800 dark:text-stone-100"
+        >
+            <div
+                class="mb-3 text-center text-4xl font-semibold text-amber-600 dark:text-amber-300"
+            >
+                <a class="main-link" href="/">{SITE_TITLE}</a>
+            </div>
+            <nav>
+                <ul
+                    class="flex-column items-middle flex flex-wrap justify-center"
+                >
+                    <li class="mx-3">
+                        <HeaderLink href="/">Home</HeaderLink>
+                    </li>
+                    <li class="mx-3">
+                        <HeaderLink href="/archive">Archive</HeaderLink>
+                    </li>
+                    <li class="mx-3">
+                        <HeaderLink
+                            href="https://github.com/t3hmun"
+                            target="_blank"
+                        >
+                            GitHub
+                        </HeaderLink>
+                    </li>
+                    <li class="mx-3">
+                        <ThemeSwitcher client:only />
+                    </li>
+                </ul>
+            </nav>
+        </header>
         <slot />
+        <footer></footer>
     </body>
 </html>

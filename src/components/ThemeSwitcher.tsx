@@ -10,7 +10,7 @@ export function ThemeSwitcher(): JSX.Element {
     return (
         <button
             onClick={toggleUpdate}
-            className="m-1 inline-grid grid-cols-2 gap-0 rounded-full border-2 border-amber-500 p-0"
+            className="m-0 inline-grid grid-cols-2 gap-0 rounded-full border-2 border-amber-500 p-0 text-sm"
         >
             <div
                 className={`rounded-l-full pb-0.5 pl-0.5 pr-0.5 ${

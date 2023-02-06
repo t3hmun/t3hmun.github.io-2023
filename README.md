@@ -25,10 +25,38 @@ Extra Goals:
 - Find reasons to write React, SolidJS and Svelte components, in islands
 
 
+## No-Goals
+
+- pnpm
+  - It is nice and fast but breaks prettier, getting in the way more than being interesting
+- monorepo
+  - This is something to do later when there is more than one project
+  - nx looks interesting but extremely unnecessary
+  - Will probably try yarn workspaces because I'm avoiding pnpm due to issues
+- typewind
+  - Don't really need it, installing is a complication
+
+## Design Ideas
+
+### Text Width
+
+I've been doing variable text width, ~65ch for blocks of text and wider for bullet list and code.
+I might change to 80-90ch for everything, looks more consistent.
+I don't write big enough blocks of text for the ~65ch reading width to matter.
+I get the feel that wider is more readable for sparse small blocks of technical text with code interpolated into it. 
+The [Astro docs](https://docs.astro.build/en/install/auto/) are a good example of what I'm finding comfy to read.
+
+The rare code blocks that needs more than 80ch should be expandable (implement as a hydrated component?).
+
 ## Todo
 
 - [x] IDE config + Forced formatting
-- [ ] Delete default stuff
+- [x] Delete default stuff
+- [ ] Layout
+  - [x] Header
+  - [x] Nice light dark toggle component (in React since that's easy)
+      - [ ] It might be interesting to see how this component turns out in SolidJs or Svelte 
+  - [ ] Footer 
 - [ ] Blog page rendering
     - [ ] Any post rendering working
     - [ ] Slug gen page with layout insertion

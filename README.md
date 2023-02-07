@@ -56,6 +56,8 @@ The rare code blocks that needs more than 80ch should be expandable (implement a
   - [x] Header
   - [x] Nice light dark toggle component (in React since that's easy)
       - [ ] It might be interesting to see how this component turns out in SolidJs or Svelte 
+      - [x] Fix SSG for the theme toggle (move window usage into effect)
+      - [ ] Re-write in Preact (smaller than React)
   - [ ] Footer 
 - [ ] Blog page rendering
     - [ ] Any post rendering working

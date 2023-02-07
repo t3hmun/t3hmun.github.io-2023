@@ -7,7 +7,7 @@
     "[markdown]": {
         "editor.defaultFormatter": null // Formatters ruin markdown.
     },
-    "cSpell.words": ["astrojs"],
+    "cSpell.words": ["astrojs", "Preact"],
 
     "prettier.documentSelectors": ["**/*.astro"] // https://www.npmjs.com/package/prettier-plugin-astro#using-in-vs-code
 }

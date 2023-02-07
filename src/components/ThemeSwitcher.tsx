@@ -1,12 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+/** client:load render this */
 export function ThemeSwitcher(): JSX.Element {
-    const [theme, setTheme] = useState<string>(window.getTheme());
-    // TODO: this needs a useEffect with a sub to an event of the theme changing. Also theme.js needs to fire a theme change event.
-    function toggleUpdate() {
-        window.toggleTheme();
+    // If the theme is light and this component is configured to client:load then the toggle will show dark for a brief moment while react initialises.
+    const [theme, setTheme] = useState<string>("dark");
+    const [toggleUpdate, setToggleUpdate] = useState<() => void>(() => {});
+
+    // This insane looking event wraps up all the window using code so astro can build-time render the component.
+    // Build time rendering ignores useEffect but wont tolerate window use anywhere else.
+    // The build time render cant know which theme the use will have saved so light theme users may see a flicker as the toggle corrects.
+    // This is better than client:only rendering where the whole row shifts when the toggle is added to the dom.
+    useEffect(() => {
+        setToggleUpdate(() => () => {
+            window.toggleTheme();
+            setTheme(window.getTheme());
+        });
         setTheme(window.getTheme());
-    }
+    }, []);
+
     return (
         <button
             onClick={toggleUpdate}

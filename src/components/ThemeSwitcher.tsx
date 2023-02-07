@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "preact/hooks";
 
 /** client:load render this */
-export function ThemeSwitcher(): JSX.Element {
+export function ThemeSwitcher() {
     // If the theme is light and this component is configured to client:load then the toggle will show dark for a brief moment while react initialises.
     const [theme, setTheme] = useState<string>("dark");
     const [toggleUpdate, setToggleUpdate] = useState<() => void>(() => {});

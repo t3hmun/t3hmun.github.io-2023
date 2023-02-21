@@ -15,6 +15,7 @@
     "@astrojs/preact": "^2.0.3",
     "@astrojs/tailwind": "^3.0.1",
     "astro": "^2.0.14",
+    "date-fns": "^2.29.3",
     "preact": "^10.12.1",
     "tailwindcss": "^3.2.7"
   },

@@ -1,5 +1,21 @@
 ---
+import { getCollection } from "astro:content";
+import ArticleLink from "../components/ArticleLink.astro";
 import Layout from "../layouts/Layout.astro";
+const allPosts = await getCollection("posts");
+const years = [
+    ...new Set(allPosts.map((p) => new Date(p.data.timestamp).getFullYear())),
+].sort();
+const byYear = years.map((y) => ({
+    year: y,
+    posts: allPosts
+        .filter((p) => new Date(p.data.timestamp).getFullYear() === y)
+        .sort(
+            (a, b) =>
+                new Date(b.data.timestamp).getTime() -
+                new Date(a.data.timestamp).getTime()
+        ),
+}));
 ---
 
 <Layout title="Archive">
@@ -9,18 +25,28 @@ import Layout from "../layouts/Layout.astro";
         >
             Archive
         </h1>
-        <p class="text-center">TODO: Put archive here</p>
-        <p class="mx-auto my-4 max-w-[80ch]">
-            There is no reason for all of the headers on this page to exactly
-            match the headers on article pages. I guess this is what Tailwind
-            sort of hints at, properly adjust styling to the context, let the
-            HTML tags be purely semantic.
-        </p>
-        <h2 class="text-4xl dark:text-amber-400">Header 2</h2>
-        <h3 class="text-3xl dark:text-amber-300">Header 3</h3>
-        <h4 class="text-2xl dark:text-amber-200">Header 4</h4>
-        <h5 class="text-xl dark:text-amber-100">Header 5</h5>
-        <h6 class="text-lg dark:text-stone-100">Header 6</h6>
-        <p>Normal text</p>
+        <ul class="mx-auto max-w-[80ch]">
+            {
+                byYear.map((y) => (
+                    <li id={`${y.year}`}>
+                        <h2 class="mb-6 text-4xl font-semibold dark:text-amber-400">
+                            {y.year}
+                        </h2>
+                        <ul>
+                            {y.posts.map((p) => (
+                                <li>
+                                    <ArticleLink
+                                        timestamp={p.data.timestamp}
+                                        title={p.data.title}
+                                        description={p.data.description}
+                                        url={`/posts/${p.slug}`}
+                                    />
+                                </li>
+                            ))}
+                        </ul>
+                    </li>
+                ))
+            }
+        </ul>
     </main>
 </Layout>

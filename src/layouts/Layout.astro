@@ -1,13 +1,24 @@
 ---
+import { Debug } from "astro/components";
 import HeaderLink from "../components/HeaderLink.astro";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { SITE_TITLE } from "../config";
 export interface Props {
-    title: string;
+    title?: string;
     home?: boolean;
+    frontmatter?: Frontmatter;
 }
 
-const { title, home } = Astro.props;
+type Frontmatter = Omit<Props, "frontmatter">;
+
+const frontmatter = Astro.props.frontmatter;
+const title = Astro.props?.title ?? frontmatter?.title;
+const home = Astro.props.home;
+
+const isDev = import.meta.env.DEV;
+const vars = isDev
+    ? `${JSON.stringify({ title, home, props: Astro.props }, null, 4)}`
+    : "";
 ---
 
 <!DOCTYPE html>
@@ -58,6 +69,13 @@ const { title, home } = Astro.props;
             </nav>
         </header>
         <slot />
+        {
+            isDev && (
+                <section>
+                    <pre>{vars}</pre>
+                </section>
+            )
+        }
         <footer></footer>
     </body>
 </html>

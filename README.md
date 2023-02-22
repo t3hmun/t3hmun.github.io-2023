@@ -59,12 +59,14 @@ The rare code blocks that needs more than 80ch should be expandable (implement a
       - [x] Re-write in Preact (smaller than React)
       - [ ] It might be interesting to see how this component turns out in SolidJs or Svelte 
   - [ ] Footer 
-- [ ] Blog page rendering
-    - [ ] Any post rendering working
-    - [ ] Slug gen page with layout insertion
+- [x] Blog page rendering
+    - [x] Any post rendering working
+    - [x] Slug gen page with layout insertion
 - [ ] Custom components for markdown rendering using MDX plugin
-    - [ ] p
-    - [ ] h1 and others
+    - [ ] Decide on 2xl vs 3xl vs 80ch/100ch container (then no max-w for headings)
+    - [x] p
+    - [x] h2 h3
+    - [ ] h4 + 
     - [ ] Code with dark and light
     - [ ] Code that can adjust width
     - [ ] Wider bullet lists that don't look weird (or just make the text wider)

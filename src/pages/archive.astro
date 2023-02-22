@@ -19,13 +19,13 @@ const byYear = years.map((y) => ({
 ---
 
 <Layout title="Archive">
-    <main class="container mx-auto max-w-[100ch] pr-2 pl-2">
+    <main class="container mx-auto pr-2 pl-2">
         <h1
             class="pt-2 pb-8 text-center text-5xl font-semibold dark:text-amber-500"
         >
             Archive
         </h1>
-        <ul class="mx-auto max-w-[80ch]">
+        <ul class="mx-auto max-w-3xl">
             {
                 byYear.map((y) => (
                     <li id={`${y.year}`}>

@@ -1,6 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import P from "../../components/posts/P.astro";
+import H2 from "../../components/posts/H2.astro";
+import H3 from "../../components/posts/H3.astro";
 
 export async function getStaticPaths() {
     const blogEntries = await getCollection("posts");
@@ -10,17 +13,17 @@ export async function getStaticPaths() {
     }));
 }
 
+export const mdxTheme = { p: P, h2: H2, h3: H3 };
+
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+const { Content, components } = await entry.render();
 ---
 
 <Layout title={entry.data.title}>
-    <article class="mx-auto max-w-[80ch]">
-        <h1
-            class="pt-2 pb-8 text-center text-5xl font-semibold dark:text-amber-500"
-        >
+    <article class="">
+        <h1 class="my-8 text-center text-5xl font-semibold dark:text-amber-500">
             {entry.data.title}
         </h1>
-        <Content />
+        <Content components={{ ...mdxTheme, ...components }} />
     </article>
 </Layout>

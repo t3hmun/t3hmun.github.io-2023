@@ -1,0 +1,11 @@
+---
+const props = Astro.props;
+---
+
+<!-- max-w-3xl works out at roughly 80ch (probably, I need to change the font), which is nice for explanation text. 
+    Can't use ch if I want it to match upto headings because they have a different ch size.
+    If I decide to write essays then maybe max-w-prose (65ch).
+-->
+<p {...props} class="mx-auto my-4 max-w-3xl text-stone-950 dark:text-stone-150">
+    <slot />
+</p>

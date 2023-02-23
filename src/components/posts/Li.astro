@@ -1,0 +1,7 @@
+---
+const props = Astro.props;
+---
+
+<li {...props} class="[&>ol]:pl-4 [&>ul]:pl-4">
+    <slot />
+</li>

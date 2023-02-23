@@ -8,7 +8,9 @@ import H4 from "../../components/posts/H4.astro";
 import H5 from "../../components/posts/H5.astro";
 import H6 from "../../components/posts/H6.astro";
 import Ul from "../../components/posts/Ul.astro";
+import Ol from "../../components/posts/Ol.astro";
 import Li from "../../components/posts/Li.astro";
+import Blockquote from "../../components/posts/Blockquote.astro";
 
 export async function getStaticPaths() {
     const blogEntries = await getCollection("posts");
@@ -26,7 +28,9 @@ export const mdxTheme = {
     h5: H5,
     h6: H6,
     ul: Ul,
+    ol: Ol,
     li: Li,
+    blockquote: Blockquote,
 };
 
 const { entry } = Astro.props;
@@ -34,7 +38,9 @@ const { Content, components } = await entry.render();
 ---
 
 <Layout title={entry.data.title}>
-    <article class="">
+    <article
+        class="[&>aside]:mx-auto [&>aside]:max-w-3xl [&>aside]:border-l-2 [&>aside]:border-amber-600 [&>aside]:pl-2"
+    >
         <h1 class="my-8 text-center text-5xl font-semibold dark:text-amber-500">
             {entry.data.title}
         </h1>

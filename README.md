@@ -66,8 +66,12 @@ The rare code blocks that needs more than 80ch should be expandable (implement a
     - [ ] Decide on 2xl vs 3xl vs 80ch/100ch container (then no max-w for headings)
     - [x] p
     - [x] h2 h3
-    - [ ] h4 + 
-    - [ ] Code with dark and light
-    - [ ] Code that can adjust width
+    - [x] h4 + 
+    - [ ] a
+    - [ ] em
+    - [ ] strong
+    - [ ] code
+    - [ ] pre with dark and light
+    - [ ] pre that can adjust width
     - [ ] Wider bullet lists that don't look weird (or just make the text wider)
 - [ ] GitHub actions for deployment

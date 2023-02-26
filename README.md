@@ -67,11 +67,11 @@ The rare code blocks that needs more than 80ch should be expandable (implement a
     - [x] p
     - [x] h2 h3
     - [x] h4 + 
-    - [ ] a
-    - [ ] em
-    - [ ] strong
-    - [ ] code
+    - [x] a
+    - [x] em
+    - [x] strong
+    - [x] code
     - [ ] pre with dark and light
     - [ ] pre that can adjust width
-    - [ ] Wider bullet lists that don't look weird (or just make the text wider)
+    - ~[ ] Wider bullet lists that don't look weird (or just make the text wider)~
 - [ ] GitHub actions for deployment

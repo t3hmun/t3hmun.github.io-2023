@@ -1,0 +1,8 @@
+---
+const props = Astro.props;
+---
+
+<!-- Allow tables to be huge but auto-size and centre them so small table look fine. I reckon this will be good enough for 90%. -->
+<table {...props} class="mx-auto max-w-5xl table-auto">
+    <slot />
+</table>

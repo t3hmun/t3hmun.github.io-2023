@@ -11,6 +11,12 @@ import Ul from "../../components/posts/Ul.astro";
 import Ol from "../../components/posts/Ol.astro";
 import Li from "../../components/posts/Li.astro";
 import Blockquote from "../../components/posts/Blockquote.astro";
+import A from "../../components/posts/A.astro";
+import Em from "../../components/posts/Em.astro";
+import Strong from "../../components/posts/Strong.astro";
+import Table from "../../components/posts/Table.astro";
+import Td from "../../components/posts/Td.astro";
+import Code from "../../components/posts/Code.astro";
 
 export async function getStaticPaths() {
     const blogEntries = await getCollection("posts");
@@ -21,16 +27,22 @@ export async function getStaticPaths() {
 }
 
 export const mdxTheme = {
-    p: P,
+    a: A,
+    blockquote: Blockquote,
+    code: Code,
+    em: Em,
     h2: H2,
     h3: H3,
     h4: H4,
     h5: H5,
     h6: H6,
-    ul: Ul,
-    ol: Ol,
     li: Li,
-    blockquote: Blockquote,
+    ol: Ol,
+    p: P,
+    strong: Strong,
+    table: Table,
+    td: Td,
+    ul: Ul,
 };
 
 const { entry } = Astro.props;

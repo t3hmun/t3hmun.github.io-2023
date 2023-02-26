@@ -2,9 +2,13 @@
 const props = Astro.props;
 ---
 
-<h3
+<h6
     {...props}
     class="mx-auto my-8 max-w-3xl pb-4 text-lg font-semibold dark:text-stone-100"
 >
-    <slot />
-</h3>
+    <a
+        href={"#" + props.id}
+        class="after:ml-2 after:text-stone-500 hover:after:content-['#']"
+        ><slot /></a
+    >
+</h6>

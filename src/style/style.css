@@ -1,0 +1,7 @@
+.display-light {
+    display: var(--display-light);
+}
+
+.display-dark {
+    display: var(--display-dark);
+}

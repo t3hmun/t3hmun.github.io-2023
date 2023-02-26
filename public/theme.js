@@ -24,14 +24,12 @@ function activateTheme() {
     const theme = getTheme();
     if (theme === dark) {
         document.documentElement.classList.add(dark);
-
-        // TODO: Add syntax css
-        //document.getElementById(cssId).setAttribute("href", "/syntax-dark.css");
+        document.documentElement.style.setProperty("--display-dark", "block");
+        document.documentElement.style.setProperty("--display-light", "none");
     } else {
         document.documentElement.classList.remove(dark);
-
-        // TODO: Add syntax css
-        //document.getElementById(cssId).setAttribute("href", "/syntax-light.css");
+        document.documentElement.style.setProperty("--display-dark", "none");
+        document.documentElement.style.setProperty("--display-light", "block");
     }
 
     // Clear local storage if user's computer settings match the current stored setting.

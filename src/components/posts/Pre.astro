@@ -1,11 +1,8 @@
 ---
-import Shiki from "shiki";
-
 const props = Astro.props;
-
-const hlDark = Shiki.getHighlighter({ theme: "min-dark" });
-const hlLight = Shiki.getHighlighter({ theme: "min-light" });
 ---
 
-<p>{JSON.stringify(props, null, 4)}</p>
-<pre {...props} class="mx-auto max-w-3xl font-mono"><slot /></pre>
+<pre
+    class={`mx-auto my-4 max-w-5xl rounded-sm px-2 font-mono ${props.class}`}
+    style=""
+    {...props}><slot /></pre>

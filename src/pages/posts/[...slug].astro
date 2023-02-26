@@ -17,6 +17,7 @@ import Strong from "../../components/posts/Strong.astro";
 import Table from "../../components/posts/Table.astro";
 import Td from "../../components/posts/Td.astro";
 import Code from "../../components/posts/Code.astro";
+import Pre from "../../components/posts/Pre.astro";
 
 export async function getStaticPaths() {
     const blogEntries = await getCollection("posts");
@@ -43,6 +44,7 @@ export const mdxTheme = {
     table: Table,
     td: Td,
     ul: Ul,
+    //    pre: Pre,
 };
 
 const { entry } = Astro.props;

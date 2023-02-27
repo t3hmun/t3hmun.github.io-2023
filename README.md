@@ -47,6 +47,7 @@ I get the feel that wider is more readable for sparse small blocks of technical 
 The [Astro docs](https://docs.astro.build/en/install/auto/) are a good example of what I'm finding comfy to read.
 
 The rare code blocks that needs more than 80ch should be expandable (implement as a hydrated component?).
+A key point here is the **site must load perfectly without js** - this needs to include themes via system settings.
 
 ## Todo
 
@@ -71,7 +72,13 @@ The rare code blocks that needs more than 80ch should be expandable (implement a
     - [x] em
     - [x] strong
     - [x] code
-    - [ ] pre with dark and light
+    - [x] pre with dark and light
     - [ ] pre that can adjust width
-    - ~[ ] Wider bullet lists that don't look weird (or just make the text wider)~
+      - [ ] preact component?
+    - [ ] document remark plugin
+    - [ ] Why are there giant gaps under the headings?
+    - [ ] Make sure code displays without js
+        - [ ] Make sure the `var(--display-dark)` has a default value of `block` without js to set it - there is a fallback value syntax.
+- [ ] The entire light themes
+    - [ ] Redo the test page to be more compressed so I can see more of what is wrong.
 - [ ] GitHub actions for deployment

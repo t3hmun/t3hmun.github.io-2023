@@ -8,28 +8,25 @@ import { visit } from "unist-util-visit";
 
 type Theme =
     | {
-          displayVar: "display-dark";
-          variant: "github-dark";
+          name: "dark";
+          shikiTheme: "github-dark";
       }
     | {
-          displayVar: "display-light";
-          variant: "github-light";
+          name: "light";
+          shikiTheme: "github-light";
       };
 
 const themes: Theme[] = [
-    { displayVar: "display-dark", variant: "github-dark" },
-    { displayVar: "display-light", variant: "github-light" },
+    { name: "dark", shikiTheme: "github-dark" },
+    { name: "light", shikiTheme: "github-light" },
 ];
 
-const hl = await getHighlighter({ themes: themes.map((t) => t.variant) });
+const hl = await getHighlighter({ themes: themes.map((t) => t.shikiTheme) });
 
 export function remarkDarkLightShiki() {
-    const wrap = false;
-    const scopedClassName = null;
-
     const highlighter = hl;
 
-    return (tree: any) => {
+    return (tree: any, file: any) => {
         visit(tree, "code", (node) => {
             let lang: string;
 
@@ -51,12 +48,12 @@ export function remarkDarkLightShiki() {
             }
 
             const light = render(node, hl, lang, {
-                displayVar: "display-dark",
-                variant: "github-dark",
+                name: "dark",
+                shikiTheme: "github-dark",
             });
             const dark = render(node, hl, lang, {
-                displayVar: "display-light",
-                variant: "github-light",
+                name: "light",
+                shikiTheme: "github-light",
             });
 
             node.type = "html";
@@ -74,7 +71,7 @@ function render(
 ): string {
     let html = hl.codeToHtml(node.value, {
         lang,
-        theme: theme.variant,
+        theme: theme.shikiTheme,
     });
 
     // Q: Couldn't these regexes match on a user's inputted code blocks?
@@ -86,7 +83,7 @@ function render(
     // Replace "shiki" class naming with "astro" and add "is:raw".
     html = html.replace(
         /<pre class="(.*?)shiki(.*?)"/,
-        `<pre is:raw  class="$1astro-code ${theme.displayVar}$2"`
+        `<pre is:raw data-theme="${theme.name}" data-lang="${lang}"` // class="$1 $2 if I wanted to preserve the theme name class.
     );
     // Add "user-select: none;" for "+"/"-" diff symbols
     if (node.lang === "diff") {
@@ -95,6 +92,6 @@ function render(
             '<span class="line"><span style="$1"><span style="user-select: none;">$2</span>'
         );
     }
-    html = html.replace(/style="(.*?)"/, 'style="$1; overflow-x: auto;"');
+    html = html.replace(/style="(.*?)"/, ""); // Delete this to keep the theme's background setting.
     return html;
 }

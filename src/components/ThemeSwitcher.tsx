@@ -24,17 +24,17 @@ export function ThemeSwitcher() {
     return (
         <button
             onClick={toggleUpdate}
-            className="m-0 inline-grid grid-cols-2 gap-0 rounded-full border-2 border-amber-500 p-0 text-sm"
+            class="m-0 inline-grid grid-cols-2 gap-0 rounded-full border-2 border-amber-500 p-0 text-sm"
         >
             <div
-                className={`rounded-l-full pb-0.5 pl-0.5 pr-0.5 ${
+                class={`rounded-l-full pb-0.5 pl-0.5 pr-0.5 ${
                     theme == "light" ? " bg-amber-500" : "bg-amber-900"
                 }`}
             >
                 🌞
             </div>
             <div
-                className={`rounded-r-full pb-0.5 pr-0.5 pl-0.5 ${
+                class={`rounded-r-full pb-0.5 pr-0.5 pl-0.5 ${
                     theme == "dark" ? " bg-amber-500" : "bg-amber-900"
                 }`}
             >

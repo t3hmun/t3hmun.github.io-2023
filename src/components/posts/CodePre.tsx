@@ -21,13 +21,13 @@ export function CodePre(props: CodePreProps): JSX.Element {
         <div
             class={`mx-auto my-4 max-w-3xl rounded-md border-0 bg-stone-200 pb-2 dark:bg-stone-800 display-${theme}`}
         >
-            <div className="text-s flex justify-between rounded-t-md border-0 bg-stone-300 px-2 py-1 dark:bg-stone-700">
+            <div class="text-s flex justify-between rounded-t-md border-0 bg-stone-300 px-2 py-1 dark:bg-stone-700">
                 <div>{lang}</div>
                 {clientSideJs && <div>I have JS</div>}
             </div>
             <pre
-                className={`mx-2 overflow-x-auto px-2 py-1 font-mono ${props.class} `}
                 {...props}
+                class={`mx-2 overflow-x-auto px-2 py-1 font-mono ${props.class} `}
             >
                 {props.children}
             </pre>

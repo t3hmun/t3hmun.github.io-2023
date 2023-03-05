@@ -1,7 +1,7 @@
 ---
 export interface Props extends astroHTML.JSX.AnchorHTMLAttributes {}
 
-const { href, class: className, ...props } = Astro.props;
+const { href, class: propClasses, ...props } = Astro.props;
 
 const isActive =
     href === Astro.url.pathname ||
@@ -9,13 +9,13 @@ const isActive =
 ---
 
 <a
+    {...props}
     href={href}
-    class={`hover:text-amber-500 dark:hover:text-amber-500 ${className} ${
+    class={`hover:text-amber-500 dark:hover:text-amber-500 ${propClasses} ${
         isActive
             ? "text-amber-600 dark:text-amber-300"
             : "text-amber-700 dark:text-amber-200"
     }`}
-    {...props}
 >
     <slot />
 </a>

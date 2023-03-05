@@ -16,31 +16,19 @@ export function CodePre(props: CodePreProps): JSX.Element {
     const title = props["data-title"];
     const [clientSideJs, setClientSideJs] = useState(false);
     const [expanded, setExpanded] = useState(false);
-    const [glowTooltip, setGlowTooltip] = useState(false);
-    const [copyClicked, setCopyClicked] = useState(0);
-    const [toolTip, setToolTip] = useState("default");
+    const [copyAnim, setCopyAnim] = useState(false);
     let codeEle = useRef<null | HTMLPreElement>(null);
     useEffect(() => {
         // This effect only runs client side, so it enables the features for the js enabled.
         setClientSideJs(true);
     });
-    useEffect(() => {
-        if (copyClicked == 0) return;
-        setGlowTooltip(true);
-        var timeout = setTimeout(() => {
-            setGlowTooltip(false);
-        }, 1000);
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [copyClicked]);
 
     function clip() {
         if (!codeEle) return;
         const innerText = codeEle.current?.innerText;
         if (!innerText) return;
         navigator.clipboard.writeText(innerText);
-        setCopyClicked((x) => x + 1);
+        setCopyAnim(true);
     }
 
     return (
@@ -55,27 +43,19 @@ export function CodePre(props: CodePreProps): JSX.Element {
                 {clientSideJs && (
                     <div class="flex flex-row">
                         <div
-                            class={`pr-0.5 pl-0.5 text-amber-400  transition ${
-                                glowTooltip
-                                    ? "text-amber-400"
-                                    : "text-amber-100"
+                            class={`mr-1 cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow  hover:scale-110 hover:text-amber-400 hover:shadow-md ${
+                                copyAnim && "animate-wiggle"
                             }`}
-                        >
-                            {toolTip}
-                        </div>
-                        <div
-                            class="cursor-pointer pr-2 pl-0.5 text-amber-500 hover:text-amber-400"
                             onClick={clip}
-                            onMouseEnter={() => setToolTip("Copy")}
-                            onMouseLeave={() => setToolTip("")}
+                            onAnimationEnd={() => {
+                                setCopyAnim(false);
+                            }}
                         >
                             📋
                         </div>
                         <div
-                            class="cursor-pointer pr-0.5 pl-0.5 text-amber-500 hover:text-amber-400"
+                            class="cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow  hover:scale-110 hover:text-amber-400"
                             onClick={() => setExpanded((s) => !s)}
-                            onMouseEnter={() => setToolTip("Expand")}
-                            onMouseLeave={() => setToolTip("")}
                         >
                             ↔
                         </div>

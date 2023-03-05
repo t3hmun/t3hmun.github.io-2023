@@ -1,9 +1,14 @@
 ---
 import { getCollection } from "astro:content";
 import { sub } from "date-fns";
+import IndexLink from "../components/IndexLink.astro";
 import Layout from "../layouts/Layout.astro";
+
+const showDraftsInDev = true;
+const isDev = import.meta.env.DEV;
+
 const posts = (await getCollection("posts"))
-    .filter((p) => !p.data.draft)
+    .filter((p) => (isDev && showDraftsInDev) || !p.data.draft)
     .filter((p) => new Date(p.data.timestamp) > sub(new Date(), { years: 1 }))
     .sort(
         (a, b) =>
@@ -13,7 +18,30 @@ const posts = (await getCollection("posts"))
 ---
 
 <Layout title="t3hmun" home={true}>
-    <main class="container mx-auto max-w-[80ch]">
-        <p class="text-center">The latest incarnation of Manish's website.</p>
+    <main class="container mx-auto">
+        <p class="mx-auto max-w-xl text-center">
+            The latest incarnation of Manish's website.
+        </p>
+        <h2
+            class="my-6 mx-auto max-w-4xl text-center text-4xl font-semibold dark:text-amber-400"
+        >
+            Recent Articles
+        </h2>
+        <ul
+            class="mx-auto grid max-w-4xl grid-cols-1 gap-4 px-1 lg:grid-cols-2"
+        >
+            {
+                posts.map((p) => (
+                    <li class="flex items-center justify-center bg-stone-200 p-2 dark:bg-stone-800">
+                        <IndexLink
+                            timestamp={p.data.timestamp}
+                            title={p.data.title}
+                            description={p.data.description}
+                            url={`/posts/${p.slug}`}
+                        />
+                    </li>
+                ))
+            }
+        </ul>
     </main>
 </Layout>

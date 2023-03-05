@@ -1,0 +1,27 @@
+---
+import { friendlyDate } from "../helpers/formats";
+interface Props {
+    url: string;
+    title: string;
+    timestamp: string | Date;
+    description?: string;
+}
+const { url, title, timestamp, description } = Astro.props;
+---
+
+<div class="flex flex-col">
+    <h3
+        class="mb-1 text-center text-3xl font-semibold text-amber-300 dark:text-amber-700"
+    >
+        <a
+            class="text-amber-700 hover:text-amber-500 dark:text-amber-500 dark:hover:text-amber-200"
+            href={url}
+        >
+            {title}
+        </a>
+    </h3>
+    <span class="text-center text-sm text-amber-900 dark:text-amber-600">
+        {friendlyDate(timestamp)}
+    </span>
+    {description && <p class="pb-2 text-center">{description}</p>}
+</div>

@@ -1,11 +1,19 @@
 ---
 import { getCollection } from "astro:content";
-import ArticleLink from "../components/ArticleLink.astro";
+import ArchiveLink from "../components/ArchiveLink.astro";
 import Layout from "../layouts/Layout.astro";
-const allPosts = await getCollection("posts");
+
+const showDraftsInDev = true;
+const isDev = import.meta.env.DEV;
+
+const allPosts = (await getCollection("posts")).filter(
+    (p) => (isDev && showDraftsInDev) || !p.data.draft
+);
+
 const years = [
     ...new Set(allPosts.map((p) => new Date(p.data.timestamp).getFullYear())),
 ].sort();
+
 const byYear = years.map((y) => ({
     year: y,
     posts: allPosts
@@ -34,8 +42,8 @@ const byYear = years.map((y) => ({
                         </h2>
                         <ul>
                             {y.posts.map((p) => (
-                                <li>
-                                    <ArticleLink
+                                <li class="mb-2  bg-stone-200 p-2 dark:bg-stone-800">
+                                    <ArchiveLink
                                         timestamp={p.data.timestamp}
                                         title={p.data.title}
                                         description={p.data.description}

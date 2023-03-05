@@ -1,9 +1,18 @@
 /** Script for setting dark/light theme on a page (to work with Tailwind dark:"class")
- * - Respects system theme setting if available
- * - Allows user to override system, saving to localStorage
- * - Defaults to dark if all other settings absent (to avoid blinding us night people)
+ *  - Respects system theme setting if available
+ *  - Allows user to override system, saving to localStorage
+ *  - Defaults to dark if all other settings absent (to avoid blinding us night people)
  *
  * This does not need to be minified and isn't meant to be bundled, this is just simple js.
+ *
+ * What happens when there is no JS? A few places need to have their defaults set to dark:
+ *  - The HTML element should have the dark class set so the css should all default to dark
+ *      - Tailwind is configured to use this class
+ *      - prefers-color-scheme will not be respected without JS, no simple way to do this and allow user to toggle
+ *  - style.css should have the default values of none for display-light and block for display-dark
+ *      - This shows and hides code the appropriate generated code block
+ *  - ThemeSwitcher component needs to have its default SSG rendered state as dark.
+ *
  * */
 
 const dark = "dark";

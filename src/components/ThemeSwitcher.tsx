@@ -1,6 +1,9 @@
 import { useEffect, useState } from "preact/hooks";
 
-/** client:load render this */
+/** Theme switcher, should be SSG rendered - showing default of dark, hydrates to make it work.
+ *  People not using JS will see the switcher indicate dark theme but have no way of changing it.
+ *  This is a compromise, don't want js users to have it hydrate after the page is visible, witness jank.
+ */
 export function ThemeSwitcher() {
     // If the theme is light and this component is configured to client:load then the toggle will show dark for a brief moment while react initialises.
     const [theme, setTheme] = useState<string>("dark");

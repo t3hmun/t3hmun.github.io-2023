@@ -1,17 +1,15 @@
 ---
+/** Wrapper around CodePre to client:load it, SSG as a no-static element, hydrating adds interactive features.
+ *  This would add a tiny bit of visual jank on load but code is usually loaded low on the page.
+ */
+
+import { CodePre } from "./CodePre";
 const props = Astro.props;
-const lang = props["data-lang"];
-const disp = props["data-theme"];
+export interface Props {
+    "data-lang": string;
+    "data-theme": string;
+    class: string;
+}
 ---
 
-<div
-    class={`mx-auto my-4 max-w-3xl pb-2 rounded-md border-0 dark:bg-stone-800 display-${disp}`}
->
-    <div class="rounded-t-md border-0 bg-stone-700 px-2 py-1 text-sm">
-        {lang}
-    </div>
-    <!-- <pre>{JSON.stringify(props, null, 4)}</pre> -->
-    <pre
-        class={`mx-2 px-2 py-1 font-mono overflow-x-auto ${props.class} `}
-        {...props}><slot /></pre>
-</div>
+<CodePre {...props} client:load><slot /></CodePre>

@@ -18,6 +18,7 @@ import Table from "../../components/posts/Table.astro";
 import Td from "../../components/posts/Td.astro";
 import Code from "../../components/posts/Code.astro";
 import Pre from "../../components/posts/Pre.astro";
+import { CodePre } from "../../components/posts/CodePre";
 
 export async function getStaticPaths() {
     const blogEntries = await getCollection("posts");

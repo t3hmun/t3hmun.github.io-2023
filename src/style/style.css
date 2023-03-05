@@ -1,9 +1,9 @@
 /** Anything that should block displayed with light theme otherwise display none. */
 .display-light {
-    display: var(--display-light);
+    display: var(--display-light, none);
 }
 
 /** Anything that should block displayed with dark theme otherwise display none. */
 .display-dark {
-    display: var(--display-dark);
+    display: var(--display-dark, block);
 }

@@ -73,12 +73,12 @@ A key point here is the **site must load perfectly without js** - this needs to 
     - [x] strong
     - [x] code
     - [x] pre with dark and light
-    - [ ] pre that can adjust width
-      - [ ] preact component?
+    - [x] pre that can adjust width
+      - [x] preact component?
     - [ ] document remark plugin
     - [ ] Why are there giant gaps under the headings?
-    - [ ] Make sure code displays without js
-        - [ ] Make sure the `var(--display-dark)` has a default value of `block` without js to set it - there is a fallback value syntax.
+    - [x] Make sure code displays without js
+        - [x] Make sure the `var(--display-dark)` has a default value of `block` without js to set it - there is a fallback value syntax.
 - [ ] The entire light themes
     - [ ] Redo the test page to be more compressed so I can see more of what is wrong.
 - [ ] GitHub actions for deployment

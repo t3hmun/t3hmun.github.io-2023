@@ -11,10 +11,10 @@ const isActive =
 <a
     {...props}
     href={href}
-    class={`hover:text-amber-500 dark:hover:text-amber-500 ${propClasses} ${
+    class={`hover:text-amber-500 dark:hover:text-amber-500 font-semibold ${propClasses} ${
         isActive
-            ? "text-amber-600 dark:text-amber-300"
-            : "text-amber-700 dark:text-amber-200"
+            ? "text-amber-700 dark:text-amber-300"
+            : "text-amber-800 dark:text-amber-200"
     }`}
 >
     <slot />

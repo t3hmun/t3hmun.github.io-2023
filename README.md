@@ -76,9 +76,13 @@ A key point here is the **site must load perfectly without js** - this needs to 
     - [x] pre that can adjust width
       - [x] preact component?
     - [ ] document remark plugin
-    - [ ] Why are there giant gaps under the headings?
+    - [x] Why are there giant gaps under the headings?
     - [x] Make sure code displays without js
         - [x] Make sure the `var(--display-dark)` has a default value of `block` without js to set it - there is a fallback value syntax.
-- [ ] The entire light themes
+- [x] The entire light themes
+    - [ ] Is it really ok? 
+        - [ ] The header isn't shaded
+        - [ ] No accents
+        - [ ] Look at some other light theme sites for ideas
     - [ ] Redo the test page to be more compressed so I can see more of what is wrong.
 - [ ] GitHub actions for deployment

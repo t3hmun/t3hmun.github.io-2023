@@ -19,9 +19,9 @@ export function CodePre(props: CodePreProps): JSX.Element {
     });
     return (
         <div
-            class={`mx-auto my-4 max-w-3xl rounded-md border-0 pb-2 dark:bg-stone-800 display-${theme}`}
+            class={`mx-auto my-4 max-w-3xl rounded-md border-0 bg-stone-200 pb-2 dark:bg-stone-800 display-${theme}`}
         >
-            <div className="text-s flex justify-between rounded-t-md border-0 bg-stone-700 px-2 py-1">
+            <div className="text-s flex justify-between rounded-t-md border-0 bg-stone-300 px-2 py-1 dark:bg-stone-700">
                 <div>{lang}</div>
                 {clientSideJs && <div>I have JS</div>}
             </div>

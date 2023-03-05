@@ -5,7 +5,7 @@ import type { JSX } from "preact/jsx-runtime";
 type CodePreProps = {
     "data-lang": string;
     "data-theme": string;
-    "data-filename"?: string;
+    "data-title"?: string;
     class: string;
     children: ComponentChildren;
 };
@@ -13,8 +13,7 @@ type CodePreProps = {
 export function CodePre(props: CodePreProps): JSX.Element {
     const lang = props["data-lang"];
     const theme = props["data-theme"];
-    const filename = props["data-filename"];
-    const title = filename ?? lang;
+    const title = props["data-title"];
     const [clientSideJs, setClientSideJs] = useState(false);
     const [expanded, setExpanded] = useState(false);
     useEffect(() => {

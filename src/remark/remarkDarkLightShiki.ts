@@ -5,6 +5,7 @@
 
 import { getHighlighter, Highlighter } from "shiki";
 import { visit } from "unist-util-visit";
+import { escape } from "html-escaper";
 
 type Theme =
     | {
@@ -28,6 +29,7 @@ export function remarkDarkLightShiki() {
 
     return (tree: any, file: any) => {
         visit(tree, "code", (node) => {
+            console.log(JSON.stringify(node, null, 4));
             let lang: string;
 
             if (typeof node.lang === "string") {
@@ -47,11 +49,13 @@ export function remarkDarkLightShiki() {
                 lang = "plaintext";
             }
 
-            const light = render(node, hl, lang, {
+            let title = node.meta ?? lang;
+
+            const light = render(node, hl, lang, title, {
                 name: "dark",
                 shikiTheme: "github-dark",
             });
-            const dark = render(node, hl, lang, {
+            const dark = render(node, hl, lang, title, {
                 name: "light",
                 shikiTheme: "github-light",
             });
@@ -67,6 +71,7 @@ function render(
     node: any,
     hl: Highlighter,
     lang: string,
+    title: string,
     theme: Theme
 ): string {
     let html = hl.codeToHtml(node.value, {
@@ -83,7 +88,9 @@ function render(
     // Replace "shiki" class naming with "astro" and add "is:raw".
     html = html.replace(
         /<pre class="(.*?)shiki(.*?)"/,
-        `<pre is:raw data-theme="${theme.name}" data-lang="${lang}"` // class="$1 $2 if I wanted to preserve the theme name class.
+        `<pre is:raw data-theme="${
+            theme.name
+        }" data-lang="${lang}" data-title="${escape(title)}"}` // class="$1 $2 if I wanted to preserve the theme name class.
     );
     // Add "user-select: none;" for "+"/"-" diff symbols
     if (node.lang === "diff") {

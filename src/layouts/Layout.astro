@@ -20,6 +20,7 @@ const isDev = import.meta.env.DEV;
 const vars = isDev
     ? `${JSON.stringify({ title, home, props: Astro.props }, null, 4)}`
     : "";
+const today = new Date();
 ---
 
 <!DOCTYPE html>
@@ -77,6 +78,26 @@ const vars = isDev
                 </section>
             )
         }
-        <footer></footer>
+        <footer
+            class="mt-12 flex flex-col bg-stone-200 py-8 text-stone-900 dark:bg-stone-800 dark:text-stone-100"
+        >
+            <div class="mx-auto">
+                <span class="mr-4 text-amber-900 dark:text-amber-100"
+                    >&copy; {today.getFullYear()} t3hmun
+                </span>
+                <a
+                    class="text-amber-800 hover:text-amber-500 dark:text-amber-200 dark:hover:text-amber-500"
+                    href="#"
+                    ><span class="px-2">↑</span><span class="px-2">↑</span>
+                </a>
+                <span class="ml-4">
+                    <a
+                        class="text-amber-800 hover:text-amber-500 dark:text-amber-200 dark:hover:text-amber-500"
+                        href="https://creativecommons.org/licenses/by-sa/4.0/"
+                        >CC-BY-SA-4.0</a
+                    >
+                </span>
+            </div>
+        </footer>
     </body>
 </html>

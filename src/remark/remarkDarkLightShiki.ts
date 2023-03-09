@@ -29,7 +29,6 @@ export function remarkDarkLightShiki() {
 
     return (tree: any, file: any) => {
         visit(tree, "code", (node) => {
-            console.log(JSON.stringify(node, null, 4));
             let lang: string;
 
             if (typeof node.lang === "string") {

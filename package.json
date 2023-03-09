@@ -11,7 +11,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^0.17.0",
+    "@astrojs/mdx": "^0.18.0",
     "@astrojs/preact": "^2.0.3",
     "@astrojs/tailwind": "^3.0.1",
     "@types/html-escaper": "^3.0.0",

@@ -38,7 +38,7 @@
     vscode-languageserver-types "^3.17.1"
     vscode-uri "^3.0.3"
 
-"@astrojs/markdown-remark@^2.0.1", "@astrojs/markdown-remark@^2.1.0":
+"@astrojs/markdown-remark@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@astrojs/markdown-remark/-/markdown-remark-2.1.0.tgz#7c075ebbc06ebe4348274e89542dae5b9aa52285"
   integrity sha512-w9T5o3UWQIfMcCkM2nLWrlfVQazh/7mw+2N/85QGcSUkZy6oNJoyy8Xz/ZkDhHLx8HPO0RT9fABR0B/H+aDaEw==
@@ -58,13 +58,13 @@
     unist-util-visit "^4.1.0"
     vfile "^5.3.2"
 
-"@astrojs/mdx@^0.17.0":
-  version "0.17.2"
-  resolved "https://registry.yarnpkg.com/@astrojs/mdx/-/mdx-0.17.2.tgz#ad8ab05c5d61159b62df04b3ed4c912710746bb2"
-  integrity sha512-mol57cw1jJMcQgKMRGn7p6cewajq6JTNtqj5aAZgROWam/phVDSOCbXj/WU3O9+3qFnyKtpczoufQKwJTQltAw==
+"@astrojs/mdx@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@astrojs/mdx/-/mdx-0.18.0.tgz#3bb3207358f0bd3b13e53dcf0b04b9a004c4767e"
+  integrity sha512-mgICosefMpl67O7ER6Yi6ylT9Hk8ZAO6GhTlx4pYXIMOWFMQlP0NXQ9teZwPhOWzBcHWnsHEF+AzVZWbiC2EBg==
   dependencies:
-    "@astrojs/markdown-remark" "^2.0.1"
-    "@astrojs/prism" "^2.0.0"
+    "@astrojs/markdown-remark" "^2.1.0"
+    "@astrojs/prism" "^2.1.0"
     "@mdx-js/mdx" "^2.3.0"
     "@mdx-js/rollup" "^2.3.0"
     acorn "^8.8.0"
@@ -92,7 +92,7 @@
     babel-plugin-module-resolver "^5.0.0"
     preact-render-to-string "^5.2.4"
 
-"@astrojs/prism@^2.0.0", "@astrojs/prism@^2.1.0":
+"@astrojs/prism@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@astrojs/prism/-/prism-2.1.0.tgz#3c32e66e3cfdaec304e1446d0d13786bac8c3f9f"
   integrity sha512-+II6nfIFGZ7iH0FunhRGcj/J1mCxjcHl85cZRuFePKLoIhFHJT3nC3myQnUw386hUaIn2W20McxxtAVf4leeRQ==

@@ -1,28 +1,27 @@
 // Based on https://github.com/withastro/astro/blob/780c583b0eabdb457a7f90f3d447b5e37e464b2c/packages/markdown/remark/src/remark-shiki.ts
-// Cut out features and parameters I'm not using
-// Made it render twice in 2 themes.
+// Cut out features and parameters I'm not using (all the default styles and other stuff I forgot)
+// Made it render twice in 2 themes, with data-theme attr:
+//    data-theme will be dark or light for each block, the display component needs to use this to hide the one that is not the active page theme.
+// Added custom data-lang and data-title attributes:
+//    data-lang is the language of the fenced code block
+//    data-title is any text after the lang on the same line, to be used as a title for the code block
 // Removed the async on the plugin because it didn't work (no idea how the original is called).
 
 import { getHighlighter, Highlighter } from "shiki";
 import { visit } from "unist-util-visit";
 import { escape } from "html-escaper";
 
-type Theme =
-    | {
-          name: "dark";
-          shikiTheme: "github-dark";
-      }
-    | {
-          name: "light";
-          shikiTheme: "github-light";
-      };
+// Change these 2 consts to customise themes https://github.com/shikijs/shiki/blob/main/docs/themes.md#all-themes
 
-const themes: Theme[] = [
-    { name: "dark", shikiTheme: "github-dark" },
-    { name: "light", shikiTheme: "github-light" },
-];
+const darkTheme = "dark-plus";
+const lightTheme = "github-light";
 
-const hl = await getHighlighter({ themes: themes.map((t) => t.shikiTheme) });
+type Theme = {
+    name: "dark" | "light";
+    shikiTheme: string;
+};
+
+const hl = await getHighlighter({ themes: [darkTheme, lightTheme] });
 
 export function remarkDarkLightShiki() {
     const highlighter = hl;
@@ -48,15 +47,17 @@ export function remarkDarkLightShiki() {
                 lang = "plaintext";
             }
 
+            // Any text after the language on the open code fence line (```lang text after) gets stored in node.meta.
+            // I'm using that data as a custom title for the code block.
             let title = node.meta ?? lang;
 
             const light = render(node, hl, lang, title, {
                 name: "dark",
-                shikiTheme: "github-dark",
+                shikiTheme: darkTheme,
             });
             const dark = render(node, hl, lang, title, {
                 name: "light",
-                shikiTheme: "github-light",
+                shikiTheme: lightTheme,
             });
 
             node.type = "html";
@@ -66,6 +67,15 @@ export function remarkDarkLightShiki() {
     };
 }
 
+/**
+ * Render the code block in a particular theme.
+ * @param node unist tree node
+ * @param hl Shiki highlighter with themes loaded.
+ * @param lang Value for the data-lang attr
+ * @param title Value for the data-title attr
+ * @param theme The rending theme and the name is the data for the data-theme attr
+ * @returns Syntax highlighted code block html.
+ */
 function render(
     node: any,
     hl: Highlighter,

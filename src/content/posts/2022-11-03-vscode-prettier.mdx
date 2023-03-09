@@ -1,0 +1,45 @@
+---
+title: "Configure VSCode Projects to Force Formatting"
+description: "Configuration notes on forcing Prettier formatting in VSCode workspace settings."
+timestamp: "2022-11-03T12:00:00Z"
+---
+
+I like to set VSCode workspace settings to format on save and commit those setting to the repo. This enables me to:
+
+-   Never need to waste brain power on formatting
+-   Never have commits that are just formatting
+-   Never have arguments about formatting with colleagues
+-   Never waste time with linters complaining about formatting
+
+I simply gave up having my own opinions on formatting, trust Prettier's opinions and waste less time.
+
+## Setup
+
+Install the VsCode extension `esbenp.prettier-vscode`. This is the only manual that every coder has to do, the rest is done once and commited to the repo.
+
+`npm i --save-dev prettier`
+
+    -   Needed to run as a npm script
+    -   Keeps the version used consistent
+    -   This also makes it possible to use plugins to support more files
+
+Create settings file for the project `./.vscode/settings.json`:
+
+```json settings.json
+{
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "[html][js][css][ts][jsx][tsx]": {
+        // VSCode's default tab size does not match prettier.
+        "editor.tabSize": 2
+    }
+}
+```
+
+-   Format all files once with `npx prettier ./src/ -w`
+-   Add any generated files to a `.prettierignore`
+    -   `.git` and `node_modules` should be ignored by default
+
+## Enjoy
+
+Enjoy clean commits, more time to bikeshed on things that are not formatting.

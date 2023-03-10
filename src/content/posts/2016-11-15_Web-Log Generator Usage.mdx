@@ -1,0 +1,124 @@
+---
+title: "Web-Log Generator Usage"
+description": "A quick run-down of the structure and usage of the code I wrote for generating this web-log."
+timestamp: "2016-11-15T12:00:00Z"
+---
+
+## Introduction
+
+I wrote a static site generator script to create this website.
+I decided to write the whole thing from scratch instead of using existing projects in order to learn a bit of JS.
+Also writing things myself allowed me to customise things my own way:
+
+-   No annoying dependencies
+    -   Installing more than one of Ruby, Python and NodeJs is horrible.
+    -   I chose Node.Js so that I could practice some JavaScript
+-   Site shouldn't have any extraneous hard to understand JS.
+    -   This means no jQuery or any other lib bigger than my site's content.
+    -   Also no convoluted responsive themes.
+-   Should be comfortable to read on both small phones and large monitors.
+    -   No unpredictable scripted resizing that some responsive themes are guilty of.
+    -   Limited reading width that reflows to smaller screens/windows (aka word wrap).
+-   The HTML should validate and be impaired-reader friendly.
+-   Full syntax highlighting for code
+    -   I'm a software developer, I'll be writing about code.
+
+The frameworks/libs I've used:
+
+-   [Pug](https://pugjs.org/) is used to template all pages and the content of unique pages.
+-   [Less](lesscss.org) is used to create the CSS.
+-   Markdown is used for authoring posts to the web-log
+    (using [markdown-it](https://github.com/markdown-it/markdown-it)
+    with [highlight.Js](highlightjs.org)).
+-   Node.Js 6 is used to tie everything together and generate the site in one command.
+
+## Structure
+
+-   Code
+    -   `pub.js`: This is the main publishing code and entry point.
+    -   `md.js`: A wrapper for a markdown library.
+    -   `effess.js`: A promise based wrapper for common file IO functions used by `pub.js`.
+-   Style
+    -   `templates/`: Pug templates used by pages and posts
+        -   The `universal.pug` template should be used by every page of the site.
+        -   The `post.pug` template wraps the html generated from the Markdown posts.
+    -   `css/`: CSS and LESS files, compiled by the `main.less` file.
+        The intent is to output a single `main.css` file.
+-   Content
+    -   `pages/`: Contains unique pages of the website written using Pug.
+    -   `posts/`: Markdown files that represent posts to the web-log.
+
+## Configuration
+
+The basic site configuration should be tweaked for your site.
+It can be found in the `site` constant inside the `configure()` function at the beginning of `pub
+.js`.
+
+`site.baseUrl` is used to generate canonical urls for all pages.
+
+`site.nav` is a list of pages that should be part of the main nav that appears on all pages.
+
+## Site Output Folder
+
+The site output is folder is configured via the `outputDir` variable in `configure()` in `pub.js`.
+
+For my site that folder is configured as a git submodule that points to the master branch of my Github pages repo.
+The `master` branch only contains the site that is shown via Github pages,
+the `source` branch contains all this site generation code and unprocessed site data.
+
+> Configuring the output folder as a Git submodule is a convenience hack.
+> It allows allows everything to be kept in a single repository while separating the output and development.
+> If you don't like this hack put the code and site data in a different repo.
+
+## Writing Posts
+
+To avoid duplicating information the post date and title is read directly from the filename.
+As a result the file title must follow the standard pattern.
+
+```
+year-month-day_The Main Title Of the Post.md
+For example:
+2016-11-15_Web-Log Generator Usage.md
+```
+
+Any spaces in the title are converted to dashes for the url of the post,
+however dashes in the title are preserved for the title in the document.
+
+Front-matter in the document is optional, the essential information is all in the filename.
+In order to add a description for the metadata and index entry for the post insert a Json block to the start
+of the document. It must begin on the first line of the document.
+
+```json
+{
+    "description": "A quick run-down of the structure and usage of the code I wrote for generating this web-log."
+}
+```
+
+Json was chosen because it is easy to use and doesn't usually confuse markdown parsers.
+
+Do not repeat the title in the document, it will be inserted automatically as a `h1` at the beginning.
+Also do no use `h1` (a single `#` heading) in the document because this should only be used for the main title.
+
+## Generating the Site
+
+The `test` and `debug` flags are optional, may be a good idea on first try.
+
+Test mode outputs the site to `test/` with resolved file urls so that links work when the files are opened without a
+server.
+This is the quickest way of testing the output.
+
+The debug flag spams some extra information, may be a bit of a mess.
+
+```bash
+$ node pub test debug
+```
+
+Run `pub.js` without the test flag to get proper site output with correct relative urls.
+This output can then be published to a Github pages repo master branch or any other server.
+
+## Errors
+
+The code is meant to be fail-fast, will abort on any error, via the `errorAndExit()` function.
+It prints the error to the console and then kills the process.
+Explicitly killing the process is necessary because the code is very asynchronous.
+As a result there may be partial output after an error.

@@ -1,0 +1,60 @@
+---
+title: "Configuring the Xamarin Android Toolchain"
+description: "I ran into some issues publishing Android Xamarin app with API25 and Java 8 with Proguard. These are the steps to get things working on a clean install."
+timestamp: "2017-01-10T12:00:00Z"
+---
+
+## What
+
+I'm probably going to wipe my computer when I upgrade some bits soon.
+
+There are some niggles in setting up Xamarin (VS2015 Win10) to produce publishable APKs with the latest build tools.
+
+This is a run down of the bits.
+
+## Visual Studio
+
+-   Start installing Visual Studio with all the Xamarin related options ticked.
+-   Take a nap.
+
+If you already have Android SDK installed, Visual Studio might not detect it so beware.
+Either google a solution or just delete it afterwards.
+
+## Android SDK
+
+Visual Studio will install Android SDK inside of "Program Files (x86)".
+Unfortunately this can upset Proguard so move the SDK folder somewhere else.
+
+In Visual Studio go to the `Options>Xamarin` and set the new location of the Android SDK.
+
+## Build Tools 25 and Java 8
+
+In order to use the latest build tools (25.x.x) Java 8 SDK (1.8) is needed.
+Visual Studio most probably installed Java 7 SDK with build tools 24.x.x.
+The Proguard installed with the Android SDK will probably also be out of date, not compatible with JDK 1.8.
+
+-   Install [Java 8 SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+-   In Visual Studio update `Options>Xamarin` to use JDK 8.
+-   Open Android SDK manager and install:
+    -   Any updates
+    -   Latest 25.x.x Tools, Build Tools and Platform Tools
+    -   API 25 SDK Platform
+    -   If available (not yet available at time of writing) API 25 (Android 7) Intel x86 Atom system image.
+    -   API 21 (Android 6) Intel x86 Atom system image.
+    -   API 19 (Android 4.4.2) Intel x86 Atom system image (assuming this is lowest API you support).
+-   Download the latest [Proguard from SourceForge](https://sourceforge.net/projects/proguard/).
+    -   Replace `android-sdk\tools\proguard` with the new version.
+
+## Test It
+
+-   Make a new `Single View App (Android)` project in Visual Studio.
+-   Switch to `Release Build`.
+-   Open project properties:
+    -   Application tab: Set Minimum Android version to 19 (or whatever you want).
+    -   Android Options Tab:
+        -   Untick `Use Shared Runtime`
+        -   Untick `Enable developer instrumentation`
+        -   Tick `Enable Proguard`
+-   Save
+-   Rebuild Solution
+-   Celebrate

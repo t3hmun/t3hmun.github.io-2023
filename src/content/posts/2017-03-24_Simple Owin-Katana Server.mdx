@@ -1,0 +1,315 @@
+---
+title: "Simple Owin Katana Server"
+description: "Some of the underlying structure of ASP.Net 4 with OWIN."
+timestamp: "2017-03-24T12:00:00Z"
+---
+
+## What
+
+I decided I wanted to learn how ASP .Net 4\* actually works.
+The are many working layers in a ASP application and it is not obvious where everything comes from.
+This article details my understanding and tries to teach it.
+
+We will build simple servers and applications from scratch avoiding the default templates.
+
+I start by having a look at OWIN / Katana and WebAPI.
+These three are not really a part of ASP .Net proper, they are something that bolts on top.
+
+Afterwards we move on to MVC5 and ASP .Net proper, looking at how it actually works for most web-applications.
+
+## A Basic OWIN / Katana Server with Middleware
+
+To begin with lets write a tiny hello web server, a full explanation of OWIN / Katana will follow.
+This is not the shortest way to write the hello world server, but it is far more useful for understanding.
+
+> You can look at the [complete sample hello world example at GH](https://github.com/t3hmun/asp-owin-examples/tree/SimpleHelloApplication).
+
+Start by creating an default C# console application in Visual Studio.
+
+Open the manage NuGet packages window or use the PM console and add:
+
+-   `Microsoft.Owin.Hosting` (`Owin` and `Microsoft.Owin` dependencies come with it).
+-   `Microsoft.Owin.Host.HttpListener`
+
+This following listing is the full code for our first sample server.
+
+This code adds:
+
+-   A `Startup` class to configure the server.
+-   A middleware class that conditionally sends a response to the client.
+-   Some code in `Main` to host and start the server.
+
+```csharp
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
+using Microsoft.Owin.Hosting;
+using Owin;
+
+namespace SimpleOwinExample
+{
+    using AppFunc = Func<IDictionary<string, object>, Task>;
+
+    class Program
+    {
+        private static void Main(string[] args)
+        {
+            var uri = "http://localhost:8910";
+
+            using (WebApp.Start<Startup>(uri))
+            {
+                Console.WriteLine($"### Server started at {uri}");
+                Console.WriteLine("### Press anykey to shut down server.");
+                Console.ReadKey();
+                Console.WriteLine("### Server shutting down.");
+            }
+        }
+    }
+
+    class Startup
+    {
+        public void Configuration(IAppBuilder app)
+        {
+            app.Use<SampleMiddleWare>();
+            app.Use((context, next) => context.Response.WriteAsync("This is not hello."));
+        }
+    }
+
+    class SampleMiddleWare
+    {
+        private readonly AppFunc _next;
+
+        public SampleMiddleWare(AppFunc next)
+        {
+            _next = next;
+        }
+
+        public async Task Invoke(IDictionary<string, object> environment)
+        {
+            Console.WriteLine("Start of SampleMiddleWare");
+            if (environment["owin.RequestPath"].ToString().Contains("hello"))
+            {
+                using (var writer = new StreamWriter((Stream) environment["owin.ResponseBody"]))
+                {
+                    await writer.WriteAsync("Salutations.");
+                }
+            }
+            else
+            {
+                await _next.Invoke(environment);
+            }
+            Console.WriteLine("End of SampleMiddleWare");
+        }
+    }
+}
+```
+
+Type that code into your `Program.cs` and then hit run.
+A console window should pop up with the server-started message.
+
+Now we can test the server by going to `http://localhost:8910/hello` in the browser.
+Without the hello you should get the default 404.
+
+If you have bash with `cURL` then you test it there:
+
+```bash
+$ curl localhost:8910
+This is not hello.
+$ curl localhost:8910/hello
+Salutations.
+```
+
+Or With Powershell:
+
+```powershell
+PS C:\Users\t3hmu> Invoke-WebRequest -UseBasicParsing -URI "http://localhost:8910"
+
+StatusCode        : 200
+StatusDescription : OK
+Content           : {84, 104, 105, 115...}
+RawContent        : HTTP/1.1 200 OK
+                    Transfer-Encoding: chunked
+                    Date: Mon, 27 Mar 2017 17:01:31 GMT
+                    Server: Microsoft-HTTPAPI/2.0
+
+                    This is not hello.
+Headers           : {[Transfer-Encoding, chunked], [Date, Mon, 27 Mar 2017 17:01:31 GMT], [Server, Microsoft-HTTPAPI/2.0]}
+RawContentLength  : 18
+```
+
+```powershell
+PS C:\Users\t3hmu> Invoke-WebRequest -UseBasicParsing -URI "http://localhost:8910/hello"
+
+
+StatusCode        : 200
+StatusDescription : OK
+Content           : {83, 97, 108, 117...}
+RawContent        : HTTP/1.1 200 OK
+                    Transfer-Encoding: chunked
+                    Date: Mon, 27 Mar 2017 17:01:35 GMT
+                    Server: Microsoft-HTTPAPI/2.0
+
+                    Salutations.
+Headers           : {[Transfer-Encoding, chunked], [Date, Mon, 27 Mar 2017 17:01:35 GMT], [Server, Microsoft-HTTPAPI/2.0]}
+RawContentLength  : 12
+```
+
+The browser would be the normal option for testing MVC apps.
+With WebAPI a program like Postman or Insomnia would make more sense.
+Using a command line tools is nice for something super simple such as this.
+
+## Explaining the Parts of the Basic Server
+
+### What is OWIN / Katana
+
+OWIN is a standard for creating web applications in a modular manner decoupled from the server and hosting.
+
+Some basic definitions from [the OWIN spec](http://owin.org/html/spec/owin-1.0.html) (I've added examples in _(italics)_):
+
+> **Server** — The HTTP server that directly communicates with the client and then uses OWIN semantics to process requests. Servers may require an adapter layer that converts to OWIN semantics _(HTTPListener, IIS, test or mock server)_.
+
+> **Web Framework** — A self-contained component on top of OWIN exposing its own object model or API that applications may use to facilitate request processing. Web Frameworks may require an adapter layer that converts from OWIN semantics _(MVC5, Nancy, WebApi etc.)_.
+
+> **Web Application** — A specific application, possibly built on top of a Web Framework, which is run using OWIN compatible Servers _(your code)_.
+
+> **Middleware** — Pass through components that form a pipeline between a server and application to inspect, route, or modify request and response messages for a specific purpose. _(We will learn about this)_
+
+> **Host** — The process an application and server execute inside of, primarily responsible for application startup. Some Servers are also Hosts _(Command Line App, IIS, Test Runner)_.
+
+OWIN is a the specification for a interface between the server and the web-application designed to decouple the two.
+This means that a OWIN based application should be trivial to move between servers, which is extremely useful during development.
+This should make the application run predictably when shifting from a local test host to any kind of cloud or production server.
+
+Katana is the name for Microsoft's implementation of OWIN, though all the packages are called `Owin.` and `Microsoft.Owin.`.
+The Katana name isn't actually used in the namespaces.
+
+### OWIN in a bit of detail
+
+[The OWIN spec](http://owin.org/html/spec/owin-1.0.html) isn't particularly long and is worth a scan.
+
+There are 2 core concepts:
+
+-   Each request received by the server is encapsulated in a single dictionary (`IDictionary<string, object> environment`).
+-   The concept of middleware, a series of methods that run in a chain that try and deal with the request.
+
+The dictionary makes the task of adapting an existing server to the OWIN interface rather simple.
+Package all the request information into the dictionary and then forward to the OWIN interface.
+
+The OWIN spec has a [neat table](http://owin.org/html/spec/owin-1.0.html#3-2-1-request-data) of a few standard items that must be included in the dictionary.
+Middleware can add extra items to the dictionary as a way of passing data to each other.
+
+TODO: Middleware diagram
+TODO: Middleware stack diagram
+
+### The Code Line by Line
+
+#### WebApp
+
+The main starts the web-server with:
+
+`using (WebApp.Start<Startup>(uri))`
+
+`WebApp` is a part of `Microsoft.Owin.Hosting` a handy library for starting a server.
+
+The library itself does some naughty hidden things; in [`Microsoft.Owin.Hosting/Constants.cs`](https://github.com/aspnet/AspNetKatana/blob/9f6e09af6bf203744feb5347121fe25f6eec06d8/src/Microsoft.Owin.Hosting/Constants.cs)
+`DefaultServer = "Microsoft.Owin.Host.HttpListener"` is defined.
+This means by default `WebApp.Start` tries to use `Microsoft.Owin.Host.HttpListener` as the server implementation.
+It is not an dependency of `Microsoft.Owin.Hosting` so we had to manually add the reference via Nuget otherwise the code would have crashed on when run.
+
+It is written like this because `WebApp.Start()` allows you to pass other implementations as an option so it doesn't always depend on `Microsoft.Owin.Host.HttpListener`.
+Without reading the code this looks a lot like magic.
+
+Like any other command line application the program ends when the `Main()` completes so we use a `Console.ReadKey()` to keep the server running.
+
+#### Startup
+
+The `Startup` class is what we use to configure the server, supplied to `Webapp.Start()` via the generic type parameter.
+
+The `IAppBuilder` is used to build the middleware pipeline.
+Middleware are added using passing a function into `.Use()` method (also `.Run()` and `.Map()` with different features).
+
+When a request is received the first middleware added is launched.
+The middleware is given 2 parameters:
+
+-   The OWIN dictionary containing all of the request and response information (`environment`).
+-   A function that calls the next middleware in the pipeline in a similar manner(`next`).
+
+The normal convention with middleware is that it should not call the next middleware if it writes the response.
+That way the middleware keep calling the next one until one decides to write the response.
+
+With the example application you will see the messages in the console showing the flow through the middleware code.
+
+The second `Use()` call uses a few features of Katana that make it easy to quickly write small middlewares.
+The `context` object has some helper methods such as `Response.WriteAsync()`,
+which is a shortcut for writing to the `environment["owin.ResponseBody"]` stream.
+The `next` parameter in the lambda is the same as the `_next` in the `SampleMiddleWare`.
+
+Normally if you want to write a quick middleware that does not call `next()` you'd use `app.Run()` instead,
+which simply skips the next parameter.
+
+Finally `app.Map()` lets you add some more middleware that only execute if a specified path is matched.
+The following is the equivalent of the `SampleMiddleWare`:
+
+```csharp
+app.Map("/bye", builder => builder.Run(context => context.Response.WriteAsync("bye")));
+```
+
+## Adding WebAPI into the Mix
+
+WebAPI2 is a relatively simple framework for writing web APIs.
+It simplifies defining actions for GET PUT and other HTTP verbs and handles most serialisation automatically.
+
+Add the `Microsoft.AspNet.WebApi.Owin` NugGet package to our project.
+This will also add the `Microsoft.AspNet.WebApi.Core` dependency.
+
+Next we need to add a bit of code to configure the WebApi framework.
+Insert this at the beginning of the `Startup.Configuration()` method:
+
+```csharp
+var webApiConfig = new HttpConfiguration();
+webApiConfig.Routes.MapHttpRoute(
+    "apiRoute",
+    "api/{controller}/{id}",
+    new {id = RouteParameter.Optional});
+app.UseWebApi(webApiConfig);
+```
+
+`UseWebApi` is a extension method that calls `Use` to add WebAPI as another normal middleware.
+
+You should read the [Microsoft documentation](https://docs.microsoft.com/en-us/aspnet/web-api/overview/web-api-routing-and-actions/routing-and-action-selection) to get a good understanding of how the routes work.
+
+Next we add a new class a controller that does the task of the route.
+
+```csharp
+public class HelloController : ApiController
+{
+    public string Get(int id = -1)
+    {
+        return $"Hi {id}";
+    }
+}
+```
+
+And we're done, webapi works.
+
+```bash
+$ curl localhost:8910/api/hello
+"Hi -1"
+
+$ curl localhost:8910/api/hello/1234
+"Hi 1234"
+```
+
+The old other middleware we set up still work the same too.
+
+## So What about MVC5
+
+MVC5 does not exist as a middleware.
+It can not be used on top of OWIN.
+MVC5 uses the IIS integrated pipeline.
+
+When using OWIN with MVC5, the OWIN pipline gets hacked into the IIS pipline.
+You should read [Microsoft's documentation on this](https://docs.microsoft.com/en-us/aspnet/aspnet/overview/owin-and-katana/owin-middleware-in-the-iis-integrated-pipeline) too.
+
+With ASP .Net Core MVC has been fully decoupled from IIS.

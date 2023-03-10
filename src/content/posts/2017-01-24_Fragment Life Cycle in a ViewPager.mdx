@@ -1,0 +1,137 @@
+---
+title: "Fragment Life Cycle in a ViewPager"
+description: "What happens to an instance of an Android Fragment, when does it happen and why?"
+timestamp: "2017-01-24T12:00:00Z"
+---
+
+## What
+
+What happens to an instance of an Android Fragment, when does it happen and why?
+
+When using ViewPager and FragmentAdapter, the important details hidden and it is easy to make a complete mess.
+
+The documentation on Android fragments isn't as comprehensive as I would like.
+I read all of the documentation for
+`ViewPager`,
+`PagerAdapter`,
+`FragmentPagerAdapter`
+and
+`Fragment Manager`
+but the workings remained somewhat mysterious.
+
+In this article I will enlighten you as to what is going on.
+
+It may be helpful to create a new project in Android Studio, with a tabbed activity with a ViewPager navigation style.
+That is the default template that this article is based on. Or download my [demo app from github](https://github.com/t3hmun/OnTheNatureOfFragmentsAndTheActivityLifeCycle).
+
+## The All Important FragmentManager
+
+Fragments are managed by the FragmentManager.
+It is possible to use fragments without it, but proper use of FragmentManager is usually recommended for efficiency.
+The FragmentManager manages the life-cycle of the fragment in coordination with the activity lifecycle.
+It does some clever things for efficiency, but the machinations are somewhat perilous to the uninitiated.
+
+When a fragment is inserted directly into a xml layout the FragmentManager is automatically used in the background.
+FragmentPagerAdapter also does all the essential FragmentManager work in its implementation.
+
+With a default ViewPager activity the FragmentManager is hidden away in the FragmentPagerAdapter implementation,
+but it is essential to know it is there managing the creation and destruction of Fragments.
+
+## ViewPager
+
+The ViewPager manages the animation and page swiping interaction.
+
+It is rather un-interesting unless you want to do some custom animation,
+in which case go read about ViewPager.PageTransformer.
+
+## The Adapter and the Fragments
+
+The PagerAdapter has the task of supplying the ViewPager with the views to display in each page.
+The ViewPager asks the adapter to create and destroy views as it needs them.
+
+The FragmentPagerAdapter is an implementation of PagerAdapter using Fragments for each page.
+Inside FragmentPagerAdapter the FragmentManager is used to cache and manage the page Fragments efficiently.
+
+Have a quick read of the [FragmentPagerAdapter source code](https://android.googlesource.com/platform/frameworks/support/+/nougat-release/v13/java/android/support/v13/app/FragmentPagerAdapter.java).
+It is short and simple.
+
+### Fragment Creation
+
+When the app starts the ViewPager will ask the adapter for up to three pages, the current next and previous pages.
+This is required so that the both views can be seen when swiping between 2 views.
+
+The first major source of confusion is the `FragmentPagerAdapter.getItem()` method.
+
+-   Every time the ViewPager asks for a view the adapter first asks the FragmentManager.
+-   The FragmentAdapter only calls `getItem()` if the fragment is not found in the FragmentManager.
+-   After calling `getItem()` the fragment is immediately added to the FragmentManager.
+
+So `getItem` is only used to initialise a fragment the first time that it is used.
+
+### Fragment Destruction (Partial)
+
+When the page is no longer visible or adjacent to the visible page the ViewPager asks the adapter to destroy it.
+However the FragmentPagerAdapter doesn't destroy the fragment entirely.
+It calls `FragmentTransaction.detach(fragment)`, which destroys the fragment's entire view hierarchy, but not the object.
+Next time the ViewPager wants that page the same fragment object can be retrieved and the view is rebuilt.
+In the process the `onCreateView()` is called again, this is where your logic to initialise the view belongs.
+
+This is the same as process for the back-stack show in the [Fragments documentation flow chart](https://developer.android.com/guide/components/fragments.html#Creating).
+
+**However it is not that simple.** Sometimes the object is destroyed _almost_ completely...
+
+### The Screen Rotation Gotcha
+
+When the screen rotates the activity is destroyed and you might be forgiven for thinking everything starts again
+(if this doesn't ring a bell go read the [configuration change docs](https://developer.android.com/guide/topics/resources/runtime-changes.html) and study the [life-cycle chart](https://developer.android.com/reference/android/app/Activity.html#ActivityLifecycle)).
+
+Sure, it goes through the process of making a new ViewPager and and new FragmentAdapter.
+However the **FragmentManager does not forget**.
+
+Any fragments previously added to the FragmentManager are not fully lost, their arguments are saved
+(this is referring to a bundle set and accessed via `Fragment.setArguments()` and `getArguments` methods).
+When you ask for one of those fragments the FragmentManager creates a new instance of the fragment with the default empty constructor and sets the arguments.
+
+This means the freshly created FragmentAdapter may never call `getView()`, it gets newly created fragments from the FragmentManager instead.
+Any initialisation logic you put in `getView()` does not happen again.
+This fresh fragment object entirely relies on what was saved using `Fragment.setArguments()` to initialise it.
+
+For reliable code the initialisation done via `getView()` should only call `setArguments()`,
+with the actual initialisation being done in `onCreateView()` using `getArguments()`.
+
+## What we've Learnt About ViewPager Fragments
+
+-   Up to three views may be initialised simultaneously with their `onCreateView()` methods being called.
+    -   Multiple non-visible page might be initialised and fully created at any time.
+-   The page fragment may be initialised as a new object multiple times:
+    -   Initialised via your own code via FragmentManager.getItem(). Happens only once.
+    -   Initialised using the default empty constructor of the fragment by the FragmentManager
+        -   Happens on screen rotation
+        -   Happens if the system is desperate for memory
+        -   The FragmentManager will restore the fragment's arguments (accessed via `Fragment.getArguments()`)
+    -   This means any fields set in `getItem()` might be lost. Only arguments can be trusted to persist.
+    -   Must be able to fully initialise the Fragment from empty ctor and arguments (usually done in `onCreateView()`)
+-   `onCreateView()` may be called many times on the same object:
+    -   Happens when the pager navigates to the page or an adjacent page.
+    -   Some of the initialisation might not need to be repeated if the fragment object is being re-used
+        -   For large tasks involving fields, check if the field is already initialised.
+
+This may seem a bit complicated, but this is really an investigation into everything that can go wrong.
+For a simple page fragment:
+
+-   In `FragmentAdapter.getItem()` use `Fragment.setArguments()` to save all info required to configure the view.
+-   Load the data and configure the view using `getArguments()` in the fragment's `onCreateView()` method.
+
+That is enough to make a simple page fragment work reliably.
+
+On more complicated applications one may want to make use of `onAttach()` and `onCreate()`, but for a small app keep it simple.
+
+## Im Confused I Need a Demonstration
+
+You are in luck.
+
+https://github.com/t3hmun/OnTheNatureOfFragmentsAndTheActivityLifeCycle
+
+It is a basic modification of the default `Tabbed-Activity` - `SwipeViews` template with a lot of logging.
+
+Run it in Android studio, watch the log messages show you exactly what part of the activity and fragment lifecycle is happening when you swipe views and rotate.

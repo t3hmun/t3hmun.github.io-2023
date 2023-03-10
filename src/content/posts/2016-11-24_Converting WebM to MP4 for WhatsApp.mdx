@@ -1,0 +1,15 @@
+---
+title: "Converting WebM to MP4 for WhatsApp"
+timestamp: "2016-11-24T12:00:00Z"
+---
+
+WhatsApp won't upload WebM video clips so they must be converted before sharing.
+
+-   Start by downloading [FFmpeg](https://www.ffmpeg.org/download.html).
+-   No need to install anything just extract it somewhere convenient.
+-   Open a console in the FFmpeg bin directory:
+
+`./ffmpeg -i avideo.webm avideo.mp4`
+
+-   The `-i` option means input and the argument at the end is the output file.
+-   There are probably a lot of settings that could be tweaked but the defaults work.

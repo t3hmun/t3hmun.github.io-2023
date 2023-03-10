@@ -13,6 +13,7 @@ const allPosts = (await getCollection("posts")).filter(
 const years = [
     ...new Set(allPosts.map((p) => new Date(p.data.timestamp).getFullYear())),
 ].sort();
+years.reverse();
 
 const byYear = years.map((y) => ({
     year: y,

@@ -60,6 +60,7 @@ A key point here is the **site must load perfectly without js** - this needs to 
       - [x] Re-write in Preact (smaller than React)
       - [ ] It might be interesting to see how this component turns out in SolidJs or Svelte 
   - [x] Footer 
+  - [ ] Date in article
 - [x] Blog page rendering
     - [x] Any post rendering working
     - [x] Slug gen page with layout insertion

@@ -59,12 +59,16 @@ A key point here is the **site must load perfectly without js** - this needs to 
       - [x] Fix SSG for the theme toggle (move window usage into effect)
       - [x] Re-write in Preact (smaller than React)
       - [ ] It might be interesting to see how this component turns out in SolidJs or Svelte 
-  - [ ] Footer 
+  - [x] Footer 
 - [x] Blog page rendering
     - [x] Any post rendering working
     - [x] Slug gen page with layout insertion
 - [ ] Custom components for markdown rendering using MDX plugin
-    - [ ] Decide on 2xl vs 3xl vs 80ch/100ch container (then no max-w for headings)
+    - [x] Decide on 2xl vs 3xl vs 80ch/100ch container (then no max-w for headings)
+        - 3xl is nice and a universal
+        - ch widths only make sense for standard size text, will only line up with same size text
+        - Headings need a max-w to not look odd. Would need a underline or background if different width to text.
+        - Will need to review when font.
     - [x] p
     - [x] h2 h3
     - [x] h4 + 
@@ -72,6 +76,7 @@ A key point here is the **site must load perfectly without js** - this needs to 
     - [x] em
     - [x] strong
     - [x] code
+      - [ ] Fix The not-pre selector is wrong, causing indent on first line of pre.
     - [x] pre with dark and light
     - [x] pre that can adjust width
       - [x] preact component?
@@ -86,3 +91,4 @@ A key point here is the **site must load perfectly without js** - this needs to 
         - [ ] Look at some other light theme sites for ideas
     - [ ] Redo the test page to be more compressed so I can see more of what is wrong.
 - [ ] GitHub actions for deployment
+- [ ] Fonts

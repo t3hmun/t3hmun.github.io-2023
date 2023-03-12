@@ -7,8 +7,21 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: [...defaultTheme.fontFamily.sans],
-                serif: ["Merriweather", ...defaultTheme.fontFamily.serif],
+                sans: [
+                    '"Source Sans 3"',
+                    '"Comic Sans MS"',
+                    ...defaultTheme.fontFamily.sans,
+                ],
+                serif: [
+                    '"Source Serif 4"',
+                    '"Comic Sans MS"',
+                    ...defaultTheme.fontFamily.serif,
+                ],
+                mono: [
+                    '"Source Code Pro"',
+                    '"Comic Sans MS"',
+                    ...defaultTheme.fontFamily.mono,
+                ],
             },
             colors: {
                 main: colors.amber,

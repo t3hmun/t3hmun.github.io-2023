@@ -65,7 +65,7 @@ export function CodePre(props: CodePreProps): JSX.Element {
             <pre
                 ref={codeEle}
                 {...props}
-                class={`mx-2 overflow-x-auto px-2 py-1 font-mono ${props.class} `}
+                class={`mx-2 overflow-x-auto px-1 py-1 font-mono text-lg ${props.class} `}
             >
                 {props.children}
             </pre>

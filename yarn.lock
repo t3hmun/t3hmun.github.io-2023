@@ -475,6 +475,21 @@
   resolved "https://registry.yarnpkg.com/@fontsource/merriweather/-/merriweather-4.5.14.tgz#17b634fe3892e25f345954fe34df252730b96080"
   integrity sha512-kDMIAokOvE9bYf+CDmEWzV3xtR8cRJlw/BipjhxqD9MIRZfU348cZ8xhHhmPXmxRiEjZLor4xxHXqps7eCvGQg==
 
+"@fontsource/source-code-pro@^4.5.14":
+  version "4.5.14"
+  resolved "https://registry.yarnpkg.com/@fontsource/source-code-pro/-/source-code-pro-4.5.14.tgz#97e7b889f485c56132925e3b5bd1cc114b67e163"
+  integrity sha512-EWE0djE7wFCBmExWa9oT1vIp+qj5MUroVvXWb9G7Ig4t4aXDd9QDidYZzMzNemb8gQxTdOzGmhx6EZnDTFMh5Q==
+
+"@fontsource/source-sans-3@^4.5.13":
+  version "4.5.13"
+  resolved "https://registry.yarnpkg.com/@fontsource/source-sans-3/-/source-sans-3-4.5.13.tgz#2c1f30e42665e41cd0a8a228f819d8dc8bffa8f4"
+  integrity sha512-FB0RyzpcRWduGcpZv3lz7CD5NBRvpmj0uv5uVvvpolOxT/nnEbLbtYhibNvB142Vlv/mU5x4QRgy0L3tXY6qWw==
+
+"@fontsource/source-serif-4@^4.5.17":
+  version "4.5.17"
+  resolved "https://registry.yarnpkg.com/@fontsource/source-serif-4/-/source-serif-4-4.5.17.tgz#adc510be31a2e255a59331d4974b9c030d181b1a"
+  integrity sha512-ckUZWw+VAsooMOf8gknTQd845ovY0N4zQfMiTsc7290GGqyvi7z8Vn/f85i62EivHXKNq+oOOm5cyyccdzGcxA==
+
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.1.1.tgz#e5d2e450306a9491e3bd77e323e38d7aff315996"

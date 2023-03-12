@@ -1,10 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 const colors = require("tailwindcss/defaultTheme");
+const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
     darkMode: "class",
     content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
     theme: {
         extend: {
+            fontFamily: {
+                sans: [...defaultTheme.fontFamily.sans],
+                serif: ["Merriweather", ...defaultTheme.fontFamily.serif],
+            },
             colors: {
                 main: colors.amber,
                 stone: {

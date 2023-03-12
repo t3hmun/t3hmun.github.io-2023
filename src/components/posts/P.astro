@@ -6,6 +6,9 @@ const props = Astro.props;
     Can't use ch if I want it to match upto headings because they have a different ch size.
     If I decide to write essays then maybe max-w-prose (65ch).
 -->
-<p {...props} class="mx-auto my-4 max-w-3xl text-stone-950 dark:text-stone-150">
+<p
+    {...props}
+    class="mx-auto my-4 max-w-3xl font-serif text-xl text-stone-950 dark:text-stone-150"
+>
     <slot />
 </p>

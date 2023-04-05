@@ -5,6 +5,7 @@ import mdx from "@astrojs/mdx";
 import { remarkDarkLightShiki } from "./src/remark/remarkDarkLightShiki";
 
 export default defineConfig({
+    site: "https://t3hmun.github.io",
     markdown: {
         remarkPlugins: [remarkDarkLightShiki],
         syntaxHighlight: false,

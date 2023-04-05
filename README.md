@@ -91,7 +91,8 @@ A key point here is the **site must load perfectly without js** - this needs to 
         - [ ] No accents
         - [ ] Look at some other light theme sites for ideas
     - [ ] Redo the test page to be more compressed so I can see more of what is wrong.
-- [ ] GitHub actions for deployment
+- [x] GitHub actions for deployment
+    - [x] Deploy live
 - [ ] Fonts
 - [x] Filenames are slugs! 
   - [x] group by year?

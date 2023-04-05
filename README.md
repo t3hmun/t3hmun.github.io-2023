@@ -64,7 +64,7 @@ A key point here is the **site must load perfectly without js** - this needs to 
 - [x] Blog page rendering
     - [x] Any post rendering working
     - [x] Slug gen page with layout insertion
-- [ ] Custom components for markdown rendering using MDX plugin
+- [x] Custom components for markdown rendering using MDX plugin
     - [x] Decide on 2xl vs 3xl vs 80ch/100ch container (then no max-w for headings)
         - 3xl is nice and a universal
         - ch widths only make sense for standard size text, will only line up with same size text
@@ -77,11 +77,11 @@ A key point here is the **site must load perfectly without js** - this needs to 
     - [x] em
     - [x] strong
     - [x] code
-      - [ ] Fix The not-pre selector is wrong, causing indent on first line of pre.
+      - [x] Fix The not-pre selector is wrong, causing indent on first line of pre.
     - [x] pre with dark and light
     - [x] pre that can adjust width
       - [x] preact component?
-    - [ ] document remark plugin
+    - [x] document remark plugin
     - [x] Why are there giant gaps under the headings?
     - [x] Make sure code displays without js
         - [x] Make sure the `var(--display-dark)` has a default value of `block` without js to set it - there is a fallback value syntax.

@@ -6,9 +6,9 @@ import Layout from "../layouts/Layout.astro";
 const showDraftsInDev = true;
 const isDev = import.meta.env.DEV;
 
-const allPosts = (await getCollection("posts")).filter(
-    (p) => (isDev && showDraftsInDev) || !p.data.draft
-);
+const allPosts = (await getCollection("posts"))
+    .filter((p) => isDev || !p.id.startsWith("test/"))
+    .filter((p) => (isDev && showDraftsInDev) || !p.data.draft);
 
 const years = [
     ...new Set(allPosts.map((p) => new Date(p.data.timestamp).getFullYear())),

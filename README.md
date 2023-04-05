@@ -93,6 +93,6 @@ A key point here is the **site must load perfectly without js** - this needs to 
     - [ ] Redo the test page to be more compressed so I can see more of what is wrong.
 - [ ] GitHub actions for deployment
 - [ ] Fonts
-- [ ] Filenames are slugs! 
-  - [ ] group by year?
-  - [ ] rename them all to get good slugs
+- [x] Filenames are slugs! 
+  - [x] group by year?
+  - [x] rename them all to get good slugs

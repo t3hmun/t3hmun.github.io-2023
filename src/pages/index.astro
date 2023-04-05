@@ -8,6 +8,7 @@ const showDraftsInDev = true;
 const isDev = import.meta.env.DEV;
 
 const posts = (await getCollection("posts"))
+    .filter((p) => isDev || !p.id.startsWith("test/"))
     .filter((p) => (isDev && showDraftsInDev) || !p.data.draft)
     .filter((p) => new Date(p.data.timestamp) > sub(new Date(), { years: 1 }))
     .sort(

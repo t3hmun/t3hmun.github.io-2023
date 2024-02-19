@@ -1,4 +1,96 @@
-# t3h site
+# t3hmun's website re-write 2024
+
+## Why
+
+**+** Fun
+
+**-** It will ruin links to my current site if I don't maintain the paths / slugs.
+
+Fun wins
+
+## Goals
+
+- [ ] Update all the packages
+- [ ] Fix stuff that's changed
+- [ ] Make it look less bad
+
+## Plan
+
+- [x] Choose npm
+  - I don't like yarn anymore, pnpm complicates things, nx is more than just complicated, npm is fine, it is simple
+  - Using Node 20, Astro needs 18+, this is fine
+
+- [x] `npm create astro@lastest`
+  - Strictest Typescript
+  - Empty project
+  - Installed Astro 4.4.0, it is the latest
+
+- [x] Configure editor stuff
+  - [x] Update editorconfig
+    - [ ] VsCode
+      - [x] Prettier plugins
+      - [x] Format on save 
+        - But not for markdown, prettier makes a mess of it
+        - Markdown is meant to be manually fudged to improve readability.
+
+- [x] Install Astro plugins
+  - `npx astro add mdx preact tailwind`
+- [x] Merge into last years code
+- [x] Remove fonts
+- [ ] Re-format everything (because Prettier 3 came out)
+- [ ] Read the changelogs
+  - [ ] `astro`: 2.0.14 -> 4.4.0
+  - [ ] `@astrojs/mdx`: 0.18 -> 2.1.1
+  - [ ] `preact`: 10.12.1 -> 10.19.5
+  - [ ] `@astrojs/preact`: 2.0.3 -> 3.1.0
+  - [ ] `shiki`: 0.14.1 -> 1.1.5
+  - [ ] `tailwind`: 3.2.7 -> 3.4.1
+  - [ ] `@astrojs/tailwind`: 3.0.1 -> 5.1.0
+- [ ] Fix Shiki
+- [ ] Decide on new fonts
+  - Defaults are fine
+
+**Everything below here is Astro readme stuff**
+
+## ?? Project Structure
+
+Inside of your Astro project, you'll see the following folders and files:
+
+```text
+/
++-- public/
++-- src/
+�   +-- pages/
+�       +-- index.astro
++-- package.json
+```
+
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+
+Any static assets, like images, can be placed in the `public/` directory.
+
+## ?? Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## ?? Want to learn more?
+
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+
+**below here is the 2023 readme**
+
 
 The website, 2023 re-write.
 

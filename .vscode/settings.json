@@ -1,13 +1,11 @@
 {
+    // See `../.editorconfig` for things like indent size, style and newline.
+
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-    "[ignore]": {
-        "editor.defaultFormatter": null
-    },
     "[markdown]": {
-        "editor.defaultFormatter": null // Formatters ruin markdown.
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": false
     },
-    "cSpell.words": ["astrojs", "consts", "jank", "Preact", "shiki"],
-
-    "prettier.documentSelectors": ["**/*.astro"] // https://www.npmjs.com/package/prettier-plugin-astro#using-in-vs-code
+    "prettier.documentSelectors": ["**/*.astro"]
 }

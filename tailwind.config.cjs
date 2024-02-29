@@ -7,9 +7,9 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-        sans: [...defaultTheme.fontFamily.sans],
-        serif: [...defaultTheme.fontFamily.serif],
-        mono: [...defaultTheme.fontFamily.mono],
+                sans: [...defaultTheme.fontFamily.sans],
+                serif: [...defaultTheme.fontFamily.serif],
+                mono: [...defaultTheme.fontFamily.mono],
             },
             colors: {
                 main: colors.amber,

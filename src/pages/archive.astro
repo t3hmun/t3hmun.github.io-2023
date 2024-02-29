@@ -22,7 +22,7 @@ const byYear = years.map((y) => ({
         .sort(
             (a, b) =>
                 new Date(b.data.timestamp).getTime() -
-                new Date(a.data.timestamp).getTime()
+                new Date(a.data.timestamp).getTime(),
         ),
 }));
 ---

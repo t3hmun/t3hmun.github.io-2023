@@ -7,5 +7,6 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.formatOnSave": false
     },
-    "prettier.documentSelectors": ["**/*.astro"]
+    "prettier.documentSelectors": ["**/*.astro"],
+    "cSpell.words": ["consts", "jank", "preact", "shiki"]
 }

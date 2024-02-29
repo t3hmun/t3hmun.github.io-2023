@@ -9,9 +9,9 @@ export function ThemeSwitcher() {
     const [theme, setTheme] = useState<string>("dark");
     const [toggleUpdate, setToggleUpdate] = useState<() => void>(() => {});
 
-    // This insane looking event wraps up all the window using code so astro can build-time render the component.
-    // Build time rendering ignores useEffect but wont tolerate window use anywhere else.
-    // The build time render cant know which theme the use will have saved so light theme users may see a flicker as the toggle corrects.
+    // This insane looking event wraps up all the code that needs access to `window` so astro can build-time render the component.
+    // Build time rendering ignores useEffect.
+    // The build time render cant know which theme the user will have saved so light theme users may see a flicker as the toggle corrects.
     // This is better than client:only rendering where the whole row shifts when the toggle is added to the dom.
     useEffect(() => {
         setToggleUpdate(() => () => {

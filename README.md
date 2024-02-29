@@ -27,28 +27,36 @@ Fun wins
 
 - [x] Configure editor stuff
   - [x] Update editorconfig
-    - [ ] VsCode
+    - [x] VsCode
       - [x] Prettier plugins
       - [x] Format on save 
         - But not for markdown, prettier makes a mess of it
+        - Formatting mdx is fine, it isn't really markdown anymore.
         - Markdown is meant to be manually fudged to improve readability.
 
 - [x] Install Astro plugins
   - `npx astro add mdx preact tailwind`
 - [x] Merge into last years code
 - [x] Remove fonts
-- [ ] Re-format everything (because Prettier 3 came out)
+  - The old fonts don't feel great.
+- [x] Re-format everything (because Prettier 3 came out)
 - [ ] Read the changelogs
   - [ ] `astro`: 2.0.14 -> 4.4.0
   - [ ] `@astrojs/mdx`: 0.18 -> 2.1.1
   - [ ] `preact`: 10.12.1 -> 10.19.5
   - [ ] `@astrojs/preact`: 2.0.3 -> 3.1.0
-  - [ ] `shiki`: 0.14.1 -> 1.1.5
+  - [x] `shiki`: 0.14.1 -> 1.1.5
   - [ ] `tailwind`: 3.2.7 -> 3.4.1
   - [ ] `@astrojs/tailwind`: 3.0.1 -> 5.1.0
-- [ ] Fix Shiki
+- [x] Fix Shiki
+  - Major version change, it looks like even Astro is a bit behind
+  - A list of languages is now required
+  - 
 - [ ] Decide on new fonts
-  - Defaults are fine
+  - Defaults are fine?
+- [ ] Get rid of excessive comments in prod html output (every single `p` has a massive block comment)
+
+
 
 **Everything below here is Astro readme stuff**
 
@@ -89,7 +97,12 @@ All commands are run from the root of the project, from a terminal:
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
 
 
+
+
+
 **below here is the 2023 readme**
+
+
 
 
 The website, 2023 re-write.

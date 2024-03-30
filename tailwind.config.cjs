@@ -19,8 +19,8 @@ module.exports = {
                 },
                 light: {
                     text: colors.zinc["700"],
-                    bg1: colors.zinc["100"],
-                    bg2: colors.zinc["200"],
+                    bg1: colors.zinc["200"],
+                    bg2: colors.zinc["300"],
                 },
             },
             keyframes: {

@@ -1,4 +1,4 @@
-import type { ComponentChildren, Ref } from "preact";
+import type { ComponentChildren } from "preact";
 import { useEffect, useRef, useState } from "preact/hooks";
 import type { JSX } from "preact/jsx-runtime";
 
@@ -11,7 +11,9 @@ type CodePreProps = {
 };
 
 export function CodePre(props: CodePreProps): JSX.Element {
-    const lang = props["data-lang"];
+    // The title defaults to the value of lang because the title us usually a filename with an extension that makes the lang redundant.
+    // As a result we don't need lang at all.
+    // const lang = props["data-lang"];
     const theme = props["data-theme"];
     const title = props["data-title"];
     const [clientSideJs, setClientSideJs] = useState(false);

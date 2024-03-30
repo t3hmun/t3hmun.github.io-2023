@@ -18,8 +18,8 @@ const { url, title, timestamp, description } = Astro.props;
             {title}
         </a>
     </h3>
-    <span class="text-sm text-amber-900 dark:text-amber-600">
+    <span class="text-amber-900 dark:text-amber-600">
         {friendlyDate(timestamp)}
     </span>
-    {description && <p class="pb-2 ">{description}</p>}
+    {description && <p class="text-xl">{description}</p>}
 </div>

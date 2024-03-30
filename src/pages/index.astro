@@ -20,8 +20,14 @@ const posts = (await getCollection("posts"))
 
 <Layout title="t3hmun" home={true}>
     <main class="container mx-auto">
-        <p class="mx-auto max-w-xl text-center">
-            The latest incarnation of Manish's website.
+        <p class="mx-auto max-w-lg text-center text-xl my-8">
+            <span class="text-amber-900 dark:text-amber-100 font-semibold"
+                >Welcome to the latest incarnation of Manish's website.
+            </span>
+        </p>
+        <p class="mx-auto max-w-lg text-center text-xl my-8">
+            I use this site for messing around with code and occasionally try
+            and write out some of my thoughts.
         </p>
         <h2
             class="my-6 mx-auto max-w-4xl text-center text-4xl font-semibold dark:text-amber-400"
@@ -29,11 +35,11 @@ const posts = (await getCollection("posts"))
             Recent Articles
         </h2>
         <ul
-            class="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-1 lg:grid-cols-1"
+            class="mx-auto grid max-w-4xl grid-cols-1 gap-4 px-1 lg:grid-cols-1"
         >
             {
                 posts.map((p) => (
-                    <li class="p-2 flex items-center justify-center border border-zinc-600">
+                    <li class="mb-2 p-4 bg-dark-bg2">
                         <IndexLink
                             timestamp={p.data.timestamp}
                             title={p.data.title}

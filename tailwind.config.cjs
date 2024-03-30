@@ -12,8 +12,16 @@ module.exports = {
                 mono: [...defaultTheme.fontFamily.mono],
             },
             colors: {
-                dark: { text: colors.zinc["200"] },
-                light: { text: colors.zinc["700"] },
+                dark: {
+                    text: colors.zinc["200"],
+                    bg1: colors.zinc["700"],
+                    bg2: colors.zinc["600"],
+                },
+                light: {
+                    text: colors.zinc["700"],
+                    bg1: colors.zinc["100"],
+                    bg2: colors.zinc["200"],
+                },
             },
             keyframes: {
                 wiggle: {

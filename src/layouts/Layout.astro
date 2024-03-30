@@ -14,7 +14,6 @@ type Frontmatter = Omit<Props, "frontmatter">;
 
 const frontmatter = Astro.props.frontmatter;
 const title = Astro.props?.title ?? frontmatter?.title;
-const home = Astro.props.home;
 
 // A handy debug vars block to print out somewhere when needed.
 // const isDev = import.meta.env.DEV;
@@ -36,23 +35,22 @@ const today = new Date();
         <script is:inline src="/theme.js"></script>
     </head>
     <body
-        class="bg-zinc-100 px-1 text-zinc-900 dark:bg-zinc-700 dark:text-zinc-100"
+        class="px-1 bg-light-bg1 text-light-text dark:bg-dark-bg1 dark:text-dark-text"
     >
-        <header class="mb-4 bg-zinc-200 py-2 text-zinc-900 dark:bg-zinc-600">
-            <div
-                class={`${
-                    home ? "text-4xl" : "text-2xl"
-                } mb-2 text-center font-semibold text-amber-700 dark:text-amber-300`}
-            >
-                <a class="" href="/">{SITE_TITLE}</a>
-            </div>
+        <header class="mb-4 py-2 text-lg bg-light-bg2 dark:bg-dark-bg2">
             <nav>
                 <ul
-                    class="flex-column items-middle flex flex-wrap justify-center"
+                    class="max-w-3xl mx-auto flex flex-row flex-wrap justify-between content-center items-center"
                 >
-                    <li class="mx-3">
-                        <HeaderLink href="/">Home</HeaderLink>
+                    <li>
+                        <a
+                            class="text-2xl mx-3 my-auto font-semibold text-amber-700 dark:text-amber-300"
+                            href="/">{SITE_TITLE}</a
+                        >
                     </li>
+                    <!-- <li class="mx-3">
+                        <HeaderLink href="/">Home</HeaderLink>
+                    </li> -->
                     <li class="mx-3">
                         <HeaderLink href="/archive">Archive</HeaderLink>
                     </li>
@@ -78,7 +76,7 @@ const today = new Date();
                 </section>
             )
         } -->
-        <footer class="mt-20 flex flex-col bg-zinc-200 py-8 dark:bg-zinc-600">
+        <footer class="mt-20 flex flex-col bg-zinc-200 py-4 dark:bg-dark-bg2">
             <div class="mx-auto">
                 <span class="mr-4 text-amber-900 dark:text-amber-100"
                     >&copy; {today.getFullYear()} t3hmun

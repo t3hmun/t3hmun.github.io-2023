@@ -1,17 +1,11 @@
 # t3hmun's website re-write 2024
 
-## Why
-
-**+** Fun
-
-**-** It will ruin links to my current site if I don't maintain the paths / slugs.
-
-Fun wins
+Ok, not a full re-write yet, just major version bumps.
 
 ## Goals
 
-- [ ] Update all the packages
-- [ ] Fix stuff that's changed
+- [x] Update all the packages
+- [x] Fix stuff that's changed
 - [ ] Make it look less bad
 
 ## Plan

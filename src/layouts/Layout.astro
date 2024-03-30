@@ -3,10 +3,6 @@ import HeaderLink from "../components/HeaderLink.astro";
 import { ThemeSwitcher } from "../components/ThemeSwitcher";
 import { SITE_TITLE } from "../config";
 import "../style/style.css";
-import "@fontsource/merriweather";
-import "@fontsource/source-code-pro";
-import "@fontsource/source-sans-3";
-import "@fontsource/source-serif-4";
 
 export interface Props {
     title?: string;
@@ -27,7 +23,7 @@ const vars = isDev
 const today = new Date();
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="dark">
     <head>
         <meta charset="UTF-8" />
@@ -38,11 +34,9 @@ const today = new Date();
         <script is:inline src="/theme.js"></script>
     </head>
     <body
-        class="bg-stone-100 px-1 text-stone-900 dark:bg-stone-850 dark:text-stone-150"
+        class="bg-zinc-100 px-1 text-zinc-900 dark:bg-zinc-700 dark:text-zinc-100"
     >
-        <header
-            class="mb-4 bg-stone-200 py-2 text-stone-900 dark:bg-stone-800 dark:text-stone-100"
-        >
+        <header class="mb-4 bg-zinc-200 py-2 text-zinc-900 dark:bg-zinc-600">
             <div
                 class={`${
                     home ? "text-4xl" : "text-2xl"
@@ -82,9 +76,7 @@ const today = new Date();
                 </section>
             )
         } -->
-        <footer
-            class="mt-20 flex flex-col bg-stone-200 py-8 text-stone-900 dark:bg-stone-800 dark:text-stone-100"
-        >
+        <footer class="mt-20 flex flex-col bg-zinc-200 py-8 dark:bg-zinc-600">
             <div class="mx-auto">
                 <span class="mr-4 text-amber-900 dark:text-amber-100"
                     >&copy; {today.getFullYear()} t3hmun

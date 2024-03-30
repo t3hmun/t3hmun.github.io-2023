@@ -1,3 +1,15 @@
+// Custom Remark plugin for Astro to do dark and light Shiki code highlighting
+// This plugin outputs 2 pre elements, one for each theme, I think the default plugin in Astro doers that too.
+// This plugin also:
+// Exposes the language, title (everything after  ```) and theme names ( on for light and one for dark) in data- attributes on the pre element, so components can display custom title and toggle theme visibility.
+// The `data-lang` is the first word after the ``` in the code block, which is the code language.
+// The `data-title` is everything after the language, defaults to the lang when blank, I usually put a filename there when the code is for a specific file.
+// The `data-theme` is either `dark` or `light`. This is used by the component to set dark/light Tailwind classes and to set the `display-dark` or `display-light` classes.
+
+// 2024 update:
+// Version 1 of Shiki came out with breaking changes. Now all the languages have to be passed in explicitly.
+
+// 2023 original write:
 // Based on https://github.com/withastro/astro/blob/780c583b0eabdb457a7f90f3d447b5e37e464b2c/packages/markdown/remark/src/remark-shiki.ts
 // Cut out features and parameters I'm not using (all the default styles and other stuff I forgot)
 // Made it render twice in 2 themes, with data-theme attr:
@@ -7,7 +19,7 @@
 //    data-title is any text after the lang on the same line, to be used as a title for the code block
 // Removed the async on the plugin because it didn't work (no idea how the original is called).
 
-import { getHighlighter, Highlighter } from "shiki";
+import { bundledLanguages, getHighlighter, type Highlighter } from "shiki";
 import { visit } from "unist-util-visit";
 import { escape } from "html-escaper";
 
@@ -21,12 +33,15 @@ type Theme = {
     shikiTheme: string;
 };
 
-const hl = await getHighlighter({ themes: [darkTheme, lightTheme] });
+const hl = await getHighlighter({
+    themes: [darkTheme, lightTheme],
+    langs: Object.keys(bundledLanguages),
+});
 
 export function remarkDarkLightShiki() {
     const highlighter = hl;
 
-    return (tree: any, file: any) => {
+    return (tree: any) => {
         visit(tree, "code", (node) => {
             let lang: string;
 
@@ -39,7 +54,7 @@ export function remarkDarkLightShiki() {
                 } else {
                     // eslint-disable-next-line no-console
                     console.warn(
-                        `The language "${node.lang}" doesn't exist, falling back to plaintext.`
+                        `The language "${node.lang}" doesn't exist, falling back to plaintext.`,
                     );
                     lang = "plaintext";
                 }
@@ -81,7 +96,7 @@ function render(
     hl: Highlighter,
     lang: string,
     title: string,
-    theme: Theme
+    theme: Theme,
 ): string {
     let html = hl.codeToHtml(node.value, {
         lang,
@@ -99,13 +114,13 @@ function render(
         /<pre class="(.*?)shiki(.*?)"/,
         `<pre is:raw data-theme="${
             theme.name
-        }" data-lang="${lang}" data-title="${escape(title)}"}` // class="$1 $2 if I wanted to preserve the theme name class.
+        }" data-lang="${lang}" data-title="${escape(title)}"}`, // class="$1 $2 if I wanted to preserve the theme name class.
     );
     // Add "user-select: none;" for "+"/"-" diff symbols
     if (node.lang === "diff") {
         html = html.replace(
             /<span class="line"><span style="(.*?)">([\+|\-])/g,
-            '<span class="line"><span style="$1"><span style="user-select: none;">$2</span>'
+            '<span class="line"><span style="$1"><span style="user-select: none;">$2</span>',
         );
     }
     html = html.replace(/style="(.*?)"/, ""); // Delete this to keep the theme's background setting.

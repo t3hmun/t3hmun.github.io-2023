@@ -10,11 +10,11 @@ const isDev = import.meta.env.DEV;
 const posts = (await getCollection("posts"))
     .filter((p) => isDev || !p.id.startsWith("test/"))
     .filter((p) => (isDev && showDraftsInDev) || !p.data.draft)
-    .filter((p) => new Date(p.data.timestamp) > sub(new Date(), { years: 1 }))
+    .filter((p) => new Date(p.data.timestamp) > sub(new Date(), { years: 3 }))
     .sort(
         (a, b) =>
             new Date(b.data.timestamp).getTime() -
-            new Date(a.data.timestamp).getTime()
+            new Date(a.data.timestamp).getTime(),
     );
 ---
 
@@ -29,11 +29,11 @@ const posts = (await getCollection("posts"))
             Recent Articles
         </h2>
         <ul
-            class="mx-auto grid max-w-4xl grid-cols-1 gap-4 px-1 lg:grid-cols-2"
+            class="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-1 lg:grid-cols-1"
         >
             {
                 posts.map((p) => (
-                    <li class="flex items-center justify-center bg-stone-200 p-2 dark:bg-stone-800">
+                    <li class="p-2 flex items-center justify-center border border-zinc-600">
                         <IndexLink
                             timestamp={p.data.timestamp}
                             title={p.data.title}
@@ -44,5 +44,10 @@ const posts = (await getCollection("posts"))
                 ))
             }
         </ul>
+        {
+            posts.length === 0 && (
+                <p class="text-center">Nothing in the last year.</p>
+            )
+        }
     </main>
 </Layout>

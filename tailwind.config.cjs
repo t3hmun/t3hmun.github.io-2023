@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const colors = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
     darkMode: "class",
@@ -7,30 +7,13 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: [
-                    '"Source Sans 3"',
-                    '"Comic Sans MS"',
-                    ...defaultTheme.fontFamily.sans,
-                ],
-                serif: [
-                    '"Source Serif 4"',
-                    '"Comic Sans MS"',
-                    ...defaultTheme.fontFamily.serif,
-                ],
-                mono: [
-                    '"Source Code Pro"',
-                    '"Comic Sans MS"',
-                    ...defaultTheme.fontFamily.mono,
-                ],
+                sans: [...defaultTheme.fontFamily.sans],
+                serif: [...defaultTheme.fontFamily.sans],
+                mono: [...defaultTheme.fontFamily.mono],
             },
             colors: {
-                main: colors.amber,
-                stone: {
-                    50: "#F8F8F7",
-                    150: "#EEEDEC",
-                    850: "#231F1E",
-                    950: "#0E0D0C",
-                },
+                dark: { text: colors.zinc["200"] },
+                light: { text: colors.zinc["700"] },
             },
             keyframes: {
                 wiggle: {

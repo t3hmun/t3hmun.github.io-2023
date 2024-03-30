@@ -16,10 +16,12 @@ const frontmatter = Astro.props.frontmatter;
 const title = Astro.props?.title ?? frontmatter?.title;
 const home = Astro.props.home;
 
-const isDev = import.meta.env.DEV;
-const vars = isDev
-    ? `${JSON.stringify({ title, home, props: Astro.props }, null, 4)}`
-    : "";
+// A handy debug vars block to print out somewhere when needed.
+// const isDev = import.meta.env.DEV;
+// const vars = isDev
+//     ? `${JSON.stringify({ title, home, props: Astro.props }, null, 4)}`
+//     : "";
+
 const today = new Date();
 ---
 

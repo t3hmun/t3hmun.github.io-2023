@@ -34,16 +34,16 @@ const byYear = years.map((y) => ({
         >
             Archive
         </h1>
-        <ul class="mx-auto max-w-3xl">
+        <ul class="mx-auto max-w-4xl">
             {
                 byYear.map((y) => (
                     <li id={`${y.year}`}>
-                        <h2 class="mb-6 text-4xl font-semibold dark:text-amber-400">
+                        <h2 class="mb-4 text-4xl font-semibold dark:text-amber-400 ">
                             {y.year}
                         </h2>
-                        <ul class="mb-6">
+                        <ul class="mb-4">
                             {y.posts.map((p) => (
-                                <li class="mb-2  bg-stone-200 p-2 dark:bg-stone-800">
+                                <li class="mb-2 p-2  border border-zinc-600">
                                     <ArchiveLink
                                         timestamp={p.data.timestamp}
                                         title={p.data.title}

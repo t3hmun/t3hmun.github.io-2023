@@ -34,11 +34,11 @@ export function CodePre(props: CodePreProps): JSX.Element {
     return (
         // Maybe max-wit-fit should be the default for code, and I don't need any code or interactivity...
         <div
-            class={`mx-auto my-4  rounded-md border-0 bg-stone-200 pb-2 dark:bg-stone-800 display-${theme} ${
-                expanded ? "max-w-fit" : "max-w-3xl"
+            class={`mx-auto my-4  rounded-md border border-zinc-600 bg-stone-200 pb-2 dark:bg-stone-700 display-${theme} ${
+                expanded ? "min-w-min max-w-3xl" : "max-w-3xl"
             }`}
         >
-            <div class="text-s flex justify-between rounded-t-md border-0 bg-stone-300 px-2 py-1 dark:bg-stone-700">
+            <div class="text-s flex justify-between rounded-t-md border-0 bg-stone-300 px-2 py-1 dark:bg-stone-600">
                 <div>{title}</div>
                 {clientSideJs && (
                     <div class="flex flex-row">

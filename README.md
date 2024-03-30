@@ -1,12 +1,16 @@
 # t3hmun's website re-write 2024
 
-Ok, not a full re-write yet, just major version bumps.
+Ok, not a full re-write yet, just major version bumps. Maybe I'll go the whole of 2024 without a full re-write.
 
 ## Goals
 
 - [x] Update all the packages
 - [x] Fix stuff that's changed
-- [ ] Make it look less bad
+- [x] Make it look less bad
+  - It isn't as bad anymore
+    - Thats a lie the bullets look like hell
+    - [ ] Fix `ul` appearance
+    - [ ] Maybe increase line spacing
 
 ## Plan
 
@@ -46,9 +50,11 @@ Ok, not a full re-write yet, just major version bumps.
   - Major version change, it looks like even Astro is a bit behind
   - A list of languages is now required
   - 
-- [ ] Decide on new fonts
+- [x] Decide on new fonts
   - Defaults are fine?
+    - Yes
 - [ ] Get rid of excessive comments in prod html output (every single `p` has a massive block comment)
+  - Why are there comments in the built output?
 
 
 

@@ -4,7 +4,7 @@ interface Props {
     url: string;
     title: string;
     timestamp: string | Date;
-    description?: string;
+    description: string | undefined;
 }
 const { url, title, timestamp, description } = Astro.props;
 ---

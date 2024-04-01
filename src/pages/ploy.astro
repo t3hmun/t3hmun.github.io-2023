@@ -1,0 +1,15 @@
+---
+import { PloyChamp } from "../components/solid/PloyChamp";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Archive">
+    <main class="container mx-auto pr-2 pl-2">
+        <h1
+            class="pt-2 pb-8 text-center text-5xl font-semibold dark:text-amber-500"
+        >
+            Ploy Champ
+        </h1>
+        <PloyChamp client:load />
+    </main>
+</Layout>

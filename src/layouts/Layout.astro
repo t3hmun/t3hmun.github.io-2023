@@ -1,6 +1,6 @@
 ---
 import HeaderLink from "../components/HeaderLink.astro";
-import { ThemeSwitcher } from "../components/ThemeSwitcher";
+import { ThemeSwitcher } from "../components/preact/ThemeSwitcher";
 import { SITE_TITLE } from "../config";
 import "../style/style.css";
 
@@ -51,6 +51,9 @@ const today = new Date();
                     <!-- <li class="mx-3">
                         <HeaderLink href="/">Home</HeaderLink>
                     </li> -->
+                    <li class="mx-3">
+                        <HeaderLink href="/ploy">Ploy Champ</HeaderLink>
+                    </li>
                     <li class="mx-3">
                         <HeaderLink href="/archive">Archive</HeaderLink>
                     </li>

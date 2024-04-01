@@ -100,6 +100,9 @@ export function CodePre(props: CodePreProps): JSX.Element {
                                 setCopyAnim(false);
                             }}
                         >
+                            <span class="text-light-text dark:text-dark-text">
+                                📋
+                            </span>{" "}
                             Copy
                         </div>
                         {expanded && (
@@ -108,6 +111,9 @@ export function CodePre(props: CodePreProps): JSX.Element {
                                     class="cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow rounded-sm border border-zinc-300 dark:border-zinc-600 hover:scale-105 hover:text-amber-400 hover:shadow-md "
                                     onClick={() => setExpanded(false)}
                                 >
+                                    <span class="text-light-text dark:text-dark-text">
+                                        ⯇
+                                    </span>{" "}
                                     Shrink
                                 </div>
                             </>
@@ -118,6 +124,9 @@ export function CodePre(props: CodePreProps): JSX.Element {
                                     class="cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow rounded-sm border border-zinc-300 dark:border-zinc-600 hover:scale-105 hover:text-amber-400 hover:shadow-md "
                                     onClick={() => setExpanded(true)}
                                 >
+                                    <span class="text-light-text dark:text-dark-text">
+                                        ⯈
+                                    </span>{" "}
                                     Expand
                                 </div>
                             </>

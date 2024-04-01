@@ -1,8 +1,27 @@
 # t3hmun's website re-write 2024
 
-Ok, not a full re-write yet, just major version bumps. Maybe I'll go the whole of 2024 without a full re-write.
+Ok, not a full re-write, just major version bumps and tidy up. Maybe I'll go the whole of 2024 without a full re-write.
 
-## Goals
+## 2024 Goals
+
+- [ ] Make a Stratagem Hero game page
+  - [x] Forget all the other stuff I'm meant to be doing
+  - [x] Pick a framework
+    - [x] Solid because I've never used it so I'll be really productive.
+  - [ ] Create a solid component
+  - [ ] Figure out how it works
+  - [ ] Read a basic tutorial
+  - [ ] Write code to detect key presses
+  - [ ] Write code to change colors on arrows
+  - [ ] Make game...
+  - [ ] Animate?
+  - [ ] Scores
+    - [ ] Persist locally
+    - [ ] Persist via some overcomplicated web function?
+  - [ ] Timings and other stats
+  - [ ] ...
+  - [ ] ...
+  - [ ] Profit
 
 - [x] Update all the packages
 - [x] Fix stuff that's changed
@@ -11,6 +30,8 @@ Ok, not a full re-write yet, just major version bumps. Maybe I'll go the whole o
     - Thats a lie the bullets look like hell
     - [x] Fix `ul` appearance and `ol`
     - [ ] Maybe increase line spacing
+- [x] Fix bugs in code box
+- [x] Update GitHub action
 
 ## Plan
 

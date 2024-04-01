@@ -1,3 +1,14 @@
+/** Code element that has a header that displays a title (should be lang by default or filename if supplied) and copy and expand size buttons.
+ * The expand bit isn't perfect - currently if the code has ridiculous line length it will make the page that wide.
+ * Default:
+ * - Make the code boxes fit in with the page, they have their own scrollbars.
+ * - This is a horrible compromise on mobile because you often have to scroll to the bottom to get to the horizontal scroll, but the document width stays reasonable.
+ * Expanded:
+ * - The code boxes will expand to the width of the code, expanding the page with it if it doesn't fit.
+ * - This is nice for most code on a large monitor, a little bit awkward for very long lines and terrible for extreme one-line dumps (which you probably shouldn't put on the page to start with).
+ * - For mobile it is nice for medium width code because you can scroll horizontally without scrolling to find the bottom of the code box.
+ */
+
 import type { ComponentChildren } from "preact";
 import { useEffect, useRef, useState } from "preact/hooks";
 import type { JSX } from "preact/jsx-runtime";
@@ -19,7 +30,7 @@ export function CodePre(props: CodePreProps): JSX.Element {
     const [clientSideJs, setClientSideJs] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const [copyAnim, setCopyAnim] = useState(false);
-    const [codeHasScrollbar, setCodeHasScrollbar] = useState(false);
+    const [codeHasScrollbar, setCodeHasScrollbar] = useState(true);
     let codeEle = useRef<null | HTMLPreElement>(null);
     useEffect(() => {
         // This effect only runs client side, so it enables the features for the js enabled.
@@ -39,7 +50,7 @@ export function CodePre(props: CodePreProps): JSX.Element {
         return () => {
             window.removeEventListener("resize", checkForScrollbar);
         };
-    }, []);
+    }, [theme]);
 
     function clip() {
         if (!codeEle) return;
@@ -61,7 +72,7 @@ export function CodePre(props: CodePreProps): JSX.Element {
                 {clientSideJs && (
                     <div class="flex flex-row">
                         <div
-                            class={`mr-1 cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow  hover:scale-110 hover:text-amber-400 hover:shadow-md ${
+                            class={`mr-1 cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow rounded-sm border border-zinc-300 dark:border-zinc-600 hover:scale-105 hover:text-amber-400 hover:shadow-md ${
                                 copyAnim && "animate-wiggle"
                             }`}
                             onClick={clip}
@@ -74,7 +85,7 @@ export function CodePre(props: CodePreProps): JSX.Element {
                         {expanded && (
                             <>
                                 <div
-                                    class="cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow  hover:scale-110 hover:text-amber-400"
+                                    class="cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow rounded-sm border border-zinc-300 dark:border-zinc-600 hover:scale-105 hover:text-amber-400 hover:shadow-md "
                                     onClick={() => setExpanded(false)}
                                 >
                                     Shrink
@@ -84,7 +95,7 @@ export function CodePre(props: CodePreProps): JSX.Element {
                         {!expanded && codeHasScrollbar && (
                             <>
                                 <div
-                                    class="cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow  hover:scale-110 hover:text-amber-400"
+                                    class="cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow rounded-sm border border-zinc-300 dark:border-zinc-600 hover:scale-105 hover:text-amber-400 hover:shadow-md "
                                     onClick={() => setExpanded(true)}
                                 >
                                     Expand

@@ -70,7 +70,7 @@ export function CodePre(props: CodePreProps): JSX.Element {
             window.removeEventListener("resize", checkForScrollbar);
             themeObserver && themeObserver.disconnect();
         };
-    }, []);
+    }, [expanded]);
 
     function clip() {
         if (!codePre) return;
@@ -112,7 +112,7 @@ export function CodePre(props: CodePreProps): JSX.Element {
                                     onClick={() => setExpanded(false)}
                                 >
                                     <span class="text-light-text dark:text-dark-text">
-                                        ⯇
+                                        ←
                                     </span>{" "}
                                     Shrink
                                 </div>
@@ -125,7 +125,7 @@ export function CodePre(props: CodePreProps): JSX.Element {
                                     onClick={() => setExpanded(true)}
                                 >
                                     <span class="text-light-text dark:text-dark-text">
-                                        ⯈
+                                        →
                                     </span>{" "}
                                     Expand
                                 </div>

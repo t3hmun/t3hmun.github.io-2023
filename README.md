@@ -9,7 +9,7 @@ Ok, not a full re-write yet, just major version bumps. Maybe I'll go the whole o
 - [x] Make it look less bad
   - It isn't as bad anymore
     - Thats a lie the bullets look like hell
-    - [ ] Fix `ul` appearance
+    - [x] Fix `ul` appearance and `ol`
     - [ ] Maybe increase line spacing
 
 ## Plan

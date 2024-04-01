@@ -19,11 +19,27 @@ export function CodePre(props: CodePreProps): JSX.Element {
     const [clientSideJs, setClientSideJs] = useState(false);
     const [expanded, setExpanded] = useState(false);
     const [copyAnim, setCopyAnim] = useState(false);
+    const [codeHasScrollbar, setCodeHasScrollbar] = useState(false);
     let codeEle = useRef<null | HTMLPreElement>(null);
     useEffect(() => {
         // This effect only runs client side, so it enables the features for the js enabled.
         setClientSideJs(true);
     });
+
+    useEffect(() => {
+        if (!codeEle.current) return;
+        const checkForScrollbar = () => {
+            if (!codeEle.current) return;
+            const hasScroll =
+                codeEle.current.scrollWidth > codeEle.current.clientWidth;
+            setCodeHasScrollbar(hasScroll);
+        };
+        checkForScrollbar();
+        window.addEventListener("resize", checkForScrollbar);
+        return () => {
+            window.removeEventListener("resize", checkForScrollbar);
+        };
+    }, []);
 
     function clip() {
         if (!codeEle) return;
@@ -53,14 +69,28 @@ export function CodePre(props: CodePreProps): JSX.Element {
                                 setCopyAnim(false);
                             }}
                         >
-                            📋
+                            Copy
                         </div>
-                        <div
-                            class="cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow  hover:scale-110 hover:text-amber-400"
-                            onClick={() => setExpanded((s) => !s)}
-                        >
-                            ↔
-                        </div>
+                        {expanded && (
+                            <>
+                                <div
+                                    class="cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow  hover:scale-110 hover:text-amber-400"
+                                    onClick={() => setExpanded(false)}
+                                >
+                                    Shrink
+                                </div>
+                            </>
+                        )}
+                        {!expanded && codeHasScrollbar && (
+                            <>
+                                <div
+                                    class="cursor-pointer pr-0.5 pl-0.5 text-amber-500 shadow  hover:scale-110 hover:text-amber-400"
+                                    onClick={() => setExpanded(true)}
+                                >
+                                    Expand
+                                </div>
+                            </>
+                        )}
                     </div>
                 )}
             </div>

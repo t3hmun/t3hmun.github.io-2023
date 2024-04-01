@@ -7,6 +7,9 @@
  * - The code boxes will expand to the width of the code, expanding the page with it if it doesn't fit.
  * - This is nice for most code on a large monitor, a little bit awkward for very long lines and terrible for extreme one-line dumps (which you probably shouldn't put on the page to start with).
  * - For mobile it is nice for medium width code because you can scroll horizontally without scrolling to find the bottom of the code box.
+ *
+ * This really could have been done without JSX or any framework. Could have just written a tiny bit of js in a script tag.
+ * Still good enough. Maybe I'll and a random number generator that renders this component with a random framework.
  */
 
 import type { ComponentChildren } from "preact";
@@ -21,6 +24,11 @@ type CodePreProps = {
     children: ComponentChildren;
 };
 
+const styleObserverConfig: MutationObserverInit = {
+    attributes: true,
+    attributeFilter: ["style"],
+};
+
 export function CodePre(props: CodePreProps): JSX.Element {
     // The title defaults to the value of lang because the title us usually a filename with an extension that makes the lang redundant.
     // As a result we don't need lang at all.
@@ -31,30 +39,42 @@ export function CodePre(props: CodePreProps): JSX.Element {
     const [expanded, setExpanded] = useState(false);
     const [copyAnim, setCopyAnim] = useState(false);
     const [codeHasScrollbar, setCodeHasScrollbar] = useState(true);
-    let codeEle = useRef<null | HTMLPreElement>(null);
+    const codePre = useRef<null | HTMLPreElement>(null);
     useEffect(() => {
         // This effect only runs client side, so it enables the features for the js enabled.
         setClientSideJs(true);
     });
 
     useEffect(() => {
-        if (!codeEle.current) return;
+        // Check if the code pre has a horizontal scrollbar, which can change on screen resize.
+        // If the div is hidden due to being the hidden dark/light theme, there is no scrollbar.
+        // When the theme is toggled that changes without react knowing since nothing in this component changes - a single style on the root html element changes.
+        // So also check that html element for style changes.
+        // Without the theme observer, the hasScrollbar state will always be false when the theme is changed.
+
+        if (!codePre.current) return;
         const checkForScrollbar = () => {
-            if (!codeEle.current) return;
+            if (!codePre.current) return;
             const hasScroll =
-                codeEle.current.scrollWidth > codeEle.current.clientWidth;
+                codePre.current.scrollWidth > codePre.current.clientWidth;
             setCodeHasScrollbar(hasScroll);
         };
         checkForScrollbar();
         window.addEventListener("resize", checkForScrollbar);
+
+        // The theme is a style applied to the top html element by hand-witten simple js.
+        const themeObserver = new MutationObserver(() => checkForScrollbar());
+        themeObserver.observe(document.documentElement, styleObserverConfig);
+
         return () => {
             window.removeEventListener("resize", checkForScrollbar);
+            themeObserver && themeObserver.disconnect();
         };
-    }, [theme]);
+    }, []);
 
     function clip() {
-        if (!codeEle) return;
-        const innerText = codeEle.current?.innerText;
+        if (!codePre) return;
+        const innerText = codePre.current?.innerText;
         if (!innerText) return;
         navigator.clipboard.writeText(innerText);
         setCopyAnim(true);
@@ -106,7 +126,7 @@ export function CodePre(props: CodePreProps): JSX.Element {
                 )}
             </div>
             <pre
-                ref={codeEle}
+                ref={codePre}
                 {...props}
                 class={`mx-2 overflow-x-auto px-1 py-1 font-mono text-lg ${props.class} `}
             >

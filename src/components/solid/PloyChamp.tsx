@@ -2,7 +2,6 @@
 
 import { createEffect, createSignal, type JSX } from "solid-js";
 import { useKeyDownEvent } from "@solid-primitives/keyboard";
-import { t } from "../../../dist/_astro/preact.module.PEqAZ2DD";
 
 type Direction = "u" | "d" | "l" | "r";
 type StratagemName = "Resupply";
@@ -23,7 +22,7 @@ type KeyAttempt = {
 };
 
 type CompletedAttempt = {
-    startegem: Stratagem;
+    stratagem: Stratagem;
     success: boolean;
     attempt: Array<KeyAttempt>;
 };
@@ -34,6 +33,21 @@ type GameState = {
     attempt: Array<KeyAttempt>;
     completed: Array<CompletedAttempt>;
 };
+
+function printAttempt(attempt: Array<KeyAttempt>) {
+    return attempt.map((a) => `[${a.actual},${a.expected}]`).join(" ");
+}
+function printCompleted(completed: Array<CompletedAttempt>) {
+    return completed
+        .map(
+            (c) =>
+                `${c.success}: ${c.stratagem.directions.join("-")} ${printAttempt(c.attempt)}`,
+        )
+        .join("\n");
+}
+function printState(state: GameState) {
+    return `${state.stratagem.name} ${state.keySequence.join(" ")}\n${printAttempt(state.attempt)}\n${printCompleted(state.completed)}`;
+}
 
 export function PloyChamp() {
     /** If I decide to make this editable then need to add another "no-in-game" signal to suspend accepting new key-presses? */
@@ -80,7 +94,7 @@ export function PloyChamp() {
                         attempt.push({
                             expected,
                             actual,
-                            success: expected === actual,
+                            success: success,
                         });
                     }
 
@@ -88,7 +102,7 @@ export function PloyChamp() {
 
                     if (!attempt.every((a) => a.success)) {
                         completedAttempts.push({
-                            startegem: prev.stratagem,
+                            stratagem: prev.stratagem,
                             success: false,
                             attempt: attempt,
                         });
@@ -98,7 +112,7 @@ export function PloyChamp() {
                         attempt.length === prev.stratagem.directions.length
                     ) {
                         completedAttempts.push({
-                            startegem: prev.stratagem,
+                            stratagem: prev.stratagem,
                             success: true,
                             attempt: attempt,
                         });
@@ -116,10 +130,6 @@ export function PloyChamp() {
         }
     });
 
-    function printState(state: GameState) {
-        return ``;
-    }
-
     return (
         <>
             <h1>yo</h1>
@@ -130,7 +140,7 @@ export function PloyChamp() {
                 Clear
             </Button>
             <p class="font-mono">KEYS:</p>
-            <pre>{JSON.stringify(gameState(), null, 2)}</pre>
+            <pre class="whitespace-pre">{printState(gameState())}</pre>
 
             <h2 class="text-2xl mt-5 mb-3">Issues</h2>
             <ul class="list-disc pl-5">

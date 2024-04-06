@@ -1,7 +1,8 @@
 /** @jsxImportSource solid-js */
 
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, type JSX } from "solid-js";
 import { useKeyDownEvent } from "@solid-primitives/keyboard";
+import { t } from "../../../dist/_astro/preact.module.PEqAZ2DD";
 
 type Direction = "u" | "d" | "l" | "r";
 type StratagemName = "Resupply";
@@ -13,6 +14,25 @@ type Stratagem = {
 
 const stratagems: Record<StratagemName, Stratagem> = {
     Resupply: { name: "Resupply", directions: ["d", "d", "u", "r"] },
+};
+
+type KeyAttempt = {
+    expected: Direction;
+    actual: Direction;
+    success: boolean;
+};
+
+type CompletedAttempt = {
+    startegem: Stratagem;
+    success: boolean;
+    attempt: Array<KeyAttempt>;
+};
+
+type GameState = {
+    stratagem: Stratagem;
+    keySequence: Array<Direction>;
+    attempt: Array<KeyAttempt>;
+    completed: Array<CompletedAttempt>;
 };
 
 export function PloyChamp() {
@@ -28,10 +48,12 @@ export function PloyChamp() {
         arrowright: "r",
     };
 
-    const [lastSeq, setLastSeq] = createSignal<Array<Direction>>([]);
-    const [stratagem, setStratagem] = createSignal<Stratagem>(
-        stratagems.Resupply,
-    );
+    const [gameState, setGameState] = createSignal<GameState>({
+        stratagem: stratagems.Resupply,
+        keySequence: [],
+        attempt: [],
+        completed: [],
+    });
 
     const event = useKeyDownEvent();
 
@@ -42,18 +64,73 @@ export function PloyChamp() {
             const key = e.key.toLowerCase(); // The a mapping for keys with word names like ArrowUp will break if toLowerCase is removed.
             const direction = m[key];
             if (direction) {
-                setLastSeq((prev) => [...prev, direction]);
+                setGameState((prev) => {
+                    let seq = [...prev.keySequence, direction];
+
+                    // Just re-evaluate the whole attempt, it is cheap, simple and works when you reset the key sequence.
+                    let attempt: Array<KeyAttempt> = [];
+                    for (let i = 0; i < seq.length; i++) {
+                        const actual = seq[i]!;
+                        if (i >= prev.stratagem.directions.length) {
+                            // Once the strat is finished extra keys don't matter.
+                            break;
+                        }
+                        const expected = prev.stratagem.directions[i]!;
+                        const success = expected === actual;
+                        attempt.push({
+                            expected,
+                            actual,
+                            success: expected === actual,
+                        });
+                    }
+
+                    const completedAttempts = [...prev.completed];
+
+                    if (!attempt.every((a) => a.success)) {
+                        completedAttempts.push({
+                            startegem: prev.stratagem,
+                            success: false,
+                            attempt: attempt,
+                        });
+                        attempt = [];
+                        seq = [];
+                    } else if (
+                        attempt.length === prev.stratagem.directions.length
+                    ) {
+                        completedAttempts.push({
+                            startegem: prev.stratagem,
+                            success: true,
+                            attempt: attempt,
+                        });
+                        attempt = [];
+                        seq = [];
+                    }
+                    return {
+                        stratagem: prev.stratagem,
+                        keySequence: seq,
+                        attempt: attempt,
+                        completed: completedAttempts,
+                    };
+                });
             }
         }
     });
 
+    function printState(state: GameState) {
+        return ``;
+    }
+
     return (
         <>
             <h1>yo</h1>
-            <Button class="my-2" onClick={() => setLastSeq([])}>
+            <Button
+                class="my-2"
+                onClick={() => setGameState((p) => ({ ...p, keySequence: [] }))}
+            >
                 Clear
             </Button>
-            <p class="font-mono">KEYS: {lastSeq()}</p>
+            <p class="font-mono">KEYS:</p>
+            <pre>{JSON.stringify(gameState(), null, 2)}</pre>
 
             <h2 class="text-2xl mt-5 mb-3">Issues</h2>
             <ul class="list-disc pl-5">

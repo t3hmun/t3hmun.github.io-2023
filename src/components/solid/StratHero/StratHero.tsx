@@ -14,7 +14,11 @@ import type {
     Direction,
     KeyAttempt,
 } from "../StratHero/StratHeroTypes";
-import { CalcAttempt, MapRelevantKeys } from "./StratHeroLogic";
+import {
+    AttemptComplete,
+    CalcAttempt,
+    MapRelevantKeys,
+} from "./StratHeroLogic";
 
 export function StratHero() {
     const keyDownEvent = useKeyDownEvent();
@@ -34,6 +38,8 @@ export function StratHero() {
     const seqBuf = createMemo(() => MapRelevantKeys(keyMap(), keyBuf()));
 
     const attempt = createMemo(() => CalcAttempt(currStrat(), seqBuf()));
+
+    const complete = createMemo(() => AttemptComplete(attempt()));
 
     return (
         <>

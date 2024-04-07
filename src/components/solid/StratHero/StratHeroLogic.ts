@@ -43,3 +43,16 @@ export function CalcAttempt(
         };
     });
 }
+
+type AttemptStatus = "success" | "fail" | "incomplete";
+
+export function AttemptComplete(
+    attempt: Array<KeyAttempt> | undefined,
+): AttemptStatus | undefined {
+    if (!attempt) return undefined;
+    const success = attempt.every((a) => a.state === "success");
+    if (success) return "success";
+    const fail = attempt.some((a) => a.state === "fail");
+    if (fail) return "fail";
+    return "incomplete";
+}

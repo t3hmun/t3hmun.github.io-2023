@@ -5,6 +5,8 @@ export type Stratagem = {
     directions: Array<Direction>;
 };
 
+type AttemptStatus = "success" | "fail" | "incomplete";
+
 export type KeyAttempt =
     | {
           expected: Direction;
@@ -17,9 +19,9 @@ export type KeyAttempt =
           state: "pending";
       };
 
-export type CompletedAttempt = {
+export type StratAttempt = {
     stratagem: Stratagem;
-    success: boolean;
+    status: AttemptStatus;
     attempt: Array<KeyAttempt>;
 };
 

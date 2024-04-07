@@ -9,7 +9,11 @@ import {
 } from "solid-js";
 import { defaultMapping, stratagems } from "./StratHeroTypes";
 import { useKeyDownEvent } from "@solid-primitives/keyboard";
-import type { Stratagem, Direction, KeyAttempt } from "./StratHeroTypes";
+import type {
+    Stratagem,
+    Direction,
+    KeyAttempt,
+} from "../StratHero/StratHeroTypes";
 import { CalcAttempt, MapRelevantKeys } from "./StratHeroLogic";
 
 export function StratHero() {

@@ -14,8 +14,8 @@ export default defineConfig({
     },
     integrations: [
         tailwind(),
-        preact({ include: ["**/components/preact/*"] }),
+        preact({ include: ["**/components/preact/**/*"] }),
         mdx(),
-        solid({ include: ["**/components/solid/*"] }),
+        solid({ include: ["**/components/solid/**/*"] }),
     ],
 });

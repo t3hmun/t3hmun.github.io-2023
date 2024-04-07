@@ -1,15 +1,15 @@
 ---
-import { PloyChamp } from "../components/solid/PloyChamp";
+import { StratHero as Game } from "../components/solid/StratHero";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Archive">
+<Layout title="Strat Hero">
     <main class="container mx-auto pr-2 pl-2">
         <h1
             class="pt-2 pb-8 text-center text-5xl font-semibold dark:text-amber-500"
         >
-            Ploy Champ
+            Strat Hero
         </h1>
-        <PloyChamp client:load />
+        <Game client:load />
     </main>
 </Layout>

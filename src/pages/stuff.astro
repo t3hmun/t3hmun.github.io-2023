@@ -1,0 +1,23 @@
+---
+import Layout from "../layouts/Layout.astro";
+import H1 from "../components/posts/H1.astro";
+import P from "../components/posts/P.astro";
+import ArchiveLink from "../components/ArchiveLink.astro";
+---
+
+<Layout title="Archive">
+    <main class="container mx-auto pr-2 pl-2">
+        <H1> Stuff </H1>
+        <P>An assortment of projects and stuff.</P>
+        <ul class="mx-auto max-w-4xl">
+            <li class="mb-2 p-4 bg-light-bg2 dark:bg-dark-bg2">
+                <ArchiveLink
+                    timestamp={"2024-04-07T00:00:00Z"}
+                    title={"Strat Hero"}
+                    description={`An attempt to make the Stratagem Hero mini-game from Helldivers 2 using solidjs, which I have never used before.`}
+                    url={`/strat-hero`}
+                />
+            </li>
+        </ul>
+    </main>
+</Layout>

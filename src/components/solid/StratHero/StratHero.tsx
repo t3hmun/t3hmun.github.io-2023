@@ -1,100 +1,22 @@
 /** @jsxImportSource solid-js */
 
-import {
-    createEffect,
-    createMemo,
-    createSignal,
-    For,
-    type JSX,
-} from "solid-js";
-import { defaultMapping, stratagems } from "./StratHeroTypes";
+import { createEffect, type ComponentProps } from "solid-js";
 import { useKeyDownEvent } from "@solid-primitives/keyboard";
-import type {
-    Stratagem,
-    Direction,
-    KeyAttempt,
-    CompletedAttempt,
-} from "../StratHero/StratHeroTypes";
-import {
-    AttemptComplete,
-    CalcAttempt,
-    MapRelevantKeys,
-} from "./StratHeroLogic";
-import { createReducer } from "@solid-primitives/memo";
+import type { Direction, KeyAttempt } from "../StratHero/StratHeroTypes";
 
 export function StratHero() {
     const keyDownEvent = useKeyDownEvent();
-    const [game, dispatch] = createReducer();
-    const [keyMap, setKeyMap] = createSignal(defaultMapping);
-    const [keyBuf, setKeyBuf] = createSignal<Array<string>>([]);
-    const [currStrat, setCurrStrat] = createSignal<Stratagem | undefined>(
-        undefined,
-    );]
-    const [pastAttempts, setPastAttempts] = createSignal<Array<CompletedAttempt>>([]);
 
     createEffect(() => {
         // This event depends on keyDownEvent and nothing else, the only thing that appends to keyBuf. Other things may wipe it.
         const e = keyDownEvent();
         if (!e || e.repeat) return;
-        setKeyBuf((p) => [...p, e.key]);
-    });
-
-    const seqBuf = createMemo(() => MapRelevantKeys(keyMap(), keyBuf()));
-    const attempt = createMemo(() => CalcAttempt(currStrat(), seqBuf()));
-    const complete = createMemo(() => AttemptComplete(attempt()));
-
-    createEffect(() => {
-        const c = complete();
-        if (c === "success" || c === "fail") {
-            const completeAttempt = attempt();
-            const strat = currStrat();
-
-            setPastAttempts((p) => [
-                {
-                    stratagem: strat,
-                    success: c === "success",
-                    attempt: attempt()!,
-                },
-                ...p,
-            ]);
-            setKeyBuf([]);
-        }
+        const key = e.key;
+        // TODO: Send the key to the game.
     });
 
     return (
         <>
-            <div class="grid gap-4 grid-flow-col auto-cols-max my-2">
-                <Button onClick={() => setCurrStrat(stratagems.Resupply)}>
-                    Resupply
-                </Button>
-                <Button
-                    onClick={() => setCurrStrat(stratagems["Quasar Cannon"])}
-                >
-                    Quasar Cannon
-                </Button>
-                <Button onClick={() => setKeyBuf([])}>Reset Input</Button>
-            </div>
-            <div>SeqBuf: {seqBuf().join(",")}</div>
-            <div>
-                Attempt:
-                {attempt()
-                    ?.map((a) => `${a.actual},${a.expected},${a.state}`)
-                    .join("|")}
-            </div>
-
-            <div class="flex justify-center">
-                <div class="w-96">
-                    <div class="bg-yellow-500 text-slate-900 text-center">
-                        {currStrat()?.name ?? "Awaiting Stratagem"}
-                    </div>
-                    <div class="text-center">
-                        <For each={attempt()} fallback={<span>⚠</span>}>
-                            {(a) => <ActiveKeyAttempt keyAttempt={a} />}
-                        </For>
-                    </div>
-                </div>
-            </div>
-
             <h2 class="text-2xl mt-5 mb-3">Issues</h2>
             <ul class="list-disc pl-5">
                 <li>
@@ -114,50 +36,15 @@ export function StratHero() {
     );
 }
 
-type ButtonProps = {
-    onClick: () => void;
-    children: JSX.Element;
-    class?: string;
-};
+type ButtonProps = ComponentProps<"button"> & {};
 
 function Button(props: ButtonProps) {
     return (
         <button
+            {...props}
             class={`bg-orange-800 rounded active:scale-95  focus:shadow py-1 px-2 ${props.class}`}
-            onClick={props.onClick}
         >
             {props.children}
         </button>
-    );
-}
-
-type ActiveKeyAttemptProps = {
-    keyAttempt: KeyAttempt;
-};
-
-const CharMap: Record<Direction, string> = {
-    u: "⇧",
-    d: "⇩",
-    l: "⇦",
-    r: "⇨",
-};
-
-function ActiveKeyAttempt(props: ActiveKeyAttemptProps): JSX.Element {
-    let color: string;
-    switch (props.keyAttempt.state) {
-        case "success":
-            color = "text-green-500";
-            break;
-        case "fail":
-            color = "text-red-500";
-            break;
-        default: // "pending"
-            color = "text-gray-500";
-    }
-
-    return (
-        <span class={`text-4xl text-center mx-3 ${color} `}>
-            {CharMap[props.keyAttempt.expected]}
-        </span>
     );
 }

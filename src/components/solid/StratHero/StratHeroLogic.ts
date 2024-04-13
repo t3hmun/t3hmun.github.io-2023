@@ -1,14 +1,18 @@
 import type {
     Direction,
+    Game,
+    GameAction,
     KeyAttempt,
     KeyMapping,
     Stratagem,
 } from "./StratHeroTypes";
 
+export function GameDispatch(state: Game, action: GameAction): Game {}
+
 function lowerIfSingleAlpha(key: string): string {
     return /^[a-zA-Z]$/.test(key) ? key.toLowerCase() : key;
 }
-export function MapRelevantKeys(
+function MapRelevantKeys(
     keyMapping: KeyMapping,
     keys: Array<string>,
 ): Array<Direction> {
@@ -18,12 +22,12 @@ export function MapRelevantKeys(
         .filter((mappedKey): mappedKey is Direction => mappedKey !== undefined);
 }
 
-export function CalcAttempt(
-    stratagem: Stratagem | undefined,
-    seq: Array<Direction>,
+function CalcAttempt(
+    stratAttempt: StratAttempt,
 ): Array<KeyAttempt> | undefined {
+    const stratagem = stratAttempt.stratagem;
+    const s;
     // If no stratagem is selected, attempt cant be defined at all.
-    console.log(JSON.stringify(stratagem));
     if (!stratagem) return undefined;
     // Ignore keys pressed after the strat is complete, the Helldivers doesn't care.
     // Separate logic can decide if to reset or change to the next stratagem, could be a click, a timer, a key or anything else.
@@ -44,9 +48,7 @@ export function CalcAttempt(
     });
 }
 
-type AttemptStatus = "success" | "fail" | "incomplete";
-
-export function AttemptComplete(
+function AttemptComplete(
     attempt: Array<KeyAttempt> | undefined,
 ): AttemptStatus | undefined {
     if (!attempt) return undefined;

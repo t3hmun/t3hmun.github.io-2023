@@ -13,20 +13,24 @@ import type {
     Stratagem,
     Direction,
     KeyAttempt,
+    CompletedAttempt,
 } from "../StratHero/StratHeroTypes";
 import {
     AttemptComplete,
     CalcAttempt,
     MapRelevantKeys,
 } from "./StratHeroLogic";
+import { createReducer } from "@solid-primitives/memo";
 
 export function StratHero() {
     const keyDownEvent = useKeyDownEvent();
+    const [game, dispatch] = createReducer();
     const [keyMap, setKeyMap] = createSignal(defaultMapping);
     const [keyBuf, setKeyBuf] = createSignal<Array<string>>([]);
     const [currStrat, setCurrStrat] = createSignal<Stratagem | undefined>(
         undefined,
-    );
+    );]
+    const [pastAttempts, setPastAttempts] = createSignal<Array<CompletedAttempt>>([]);
 
     createEffect(() => {
         // This event depends on keyDownEvent and nothing else, the only thing that appends to keyBuf. Other things may wipe it.
@@ -36,10 +40,26 @@ export function StratHero() {
     });
 
     const seqBuf = createMemo(() => MapRelevantKeys(keyMap(), keyBuf()));
-
     const attempt = createMemo(() => CalcAttempt(currStrat(), seqBuf()));
-
     const complete = createMemo(() => AttemptComplete(attempt()));
+
+    createEffect(() => {
+        const c = complete();
+        if (c === "success" || c === "fail") {
+            const completeAttempt = attempt();
+            const strat = currStrat();
+
+            setPastAttempts((p) => [
+                {
+                    stratagem: strat,
+                    success: c === "success",
+                    attempt: attempt()!,
+                },
+                ...p,
+            ]);
+            setKeyBuf([]);
+        }
+    });
 
     return (
         <>

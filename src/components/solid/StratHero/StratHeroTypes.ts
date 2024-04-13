@@ -5,8 +5,6 @@ export type Stratagem = {
     directions: Array<Direction>;
 };
 
-type AttemptStatus = "success" | "fail" | "incomplete";
-
 export type KeyAttempt =
     | {
           expected: Direction;
@@ -19,9 +17,9 @@ export type KeyAttempt =
           state: "pending";
       };
 
-export type StratAttempt = {
+export type PastAttempt = {
     stratagem: Stratagem;
-    status: AttemptStatus;
+    status: "success" | "fail";
     attempt: Array<KeyAttempt>;
 };
 
@@ -46,4 +44,15 @@ export const defaultMapping: KeyMapping = {
     ArrowDown: "d",
     ArrowLeft: "l",
     ArrowRight: "r",
+};
+
+export type GameActionNames = "reSetStrat" | "updateKeys" | "updateMapping";
+
+export type GameAction = {};
+
+export type Game = {
+    seqBuf: Array<Direction>;
+    keyMap: KeyMapping;
+    currStrat: Stratagem | undefined;
+    pastAttempts: Array<PastAttempt>;
 };

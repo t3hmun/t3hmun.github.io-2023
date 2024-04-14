@@ -84,7 +84,15 @@ export function StratHero() {
                 <a class="text-blue-300" href="https://docs.solidjs.com">
                     Solid
                 </a>
-                , an experiment to try out the library.
+                , this page is an experiment to try out the library. The Solid
+                component is contained an{" "}
+                <a
+                    class="text-blue-300"
+                    href="https://docs.astro.build/en/concepts/islands/"
+                >
+                    Astro island
+                </a>
+                .
             </p>
             <h2 class="text-2xl mt-5 mb-3">Issues</h2>
             <ul class="list-disc pl-5">

@@ -1,7 +1,7 @@
 /** All the game logic and all code that modifies state. */
 
 import type {
-    StratagemName,
+    StratName,
     GameState,
     Direction,
     Stratagem,
@@ -84,7 +84,7 @@ function calc(
     return attempts;
 }
 
-export function setStratagem(state: GameState, name: StratagemName) {
+export function setStratagem(state: GameState, name: StratName) {
     state.stratagem = stratagems[name];
     state.keyBuf = [];
     state.currentAttempt = calc(stratagems[name], []);

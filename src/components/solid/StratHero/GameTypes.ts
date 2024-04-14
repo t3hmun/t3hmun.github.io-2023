@@ -1,9 +1,34 @@
 export type Direction = "u" | "d" | "l" | "r";
 
-export type StratagemName = "Resupply" | "Quasar Cannon" | "Reinforce";
+export type StratName =
+    | "Reinforce"
+    | "SOS Beacon"
+    | "Resupply"
+    | "Hell Bomb"
+    | "SSSD Delivery"
+    | "Seismic Probe"
+    | "Upload Data"
+    | "Eagle Rearm"
+    | "SEAF Artillery"
+    | "Eagle Strafing Run"
+    | "Eagle Airstrike"
+    | "Eagle Cluster Bomb"
+    | "Eagle Napalm"
+    | "Eagle 110MM Rocket Pods"
+    | "Eagle 500kg Bomb"
+    | "Quasar Cannon";
+
+export type StratCategory =
+    | "Mission"
+    | "Eagle"
+    | "Orbital"
+    | "Weapon"
+    | "Greens"
+    | "Backpacks";
 
 export type Stratagem = {
-    name: StratagemName;
+    name: StratName;
+    category: StratCategory;
     directions: Array<Direction>;
 };
 /** This is a utility to create an dictionary of objects keyed by their name property. */

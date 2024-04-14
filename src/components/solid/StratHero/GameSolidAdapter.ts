@@ -2,7 +2,7 @@ import { createStore, produce } from "solid-js/store";
 import * as Game from "./Game";
 import { createEffect } from "solid-js";
 import { useKeyDownEvent } from "@solid-primitives/keyboard";
-import type { StratagemName } from "./GameTypes";
+import type { StratName } from "./GameTypes";
 
 export function CreateGame() {
     const [gameState, setGameState] = createStore(Game.initGameState());
@@ -16,7 +16,7 @@ export function CreateGame() {
     });
     return {
         state: gameState,
-        setStratagem: (name: StratagemName) =>
+        setStratagem: (name: StratName) =>
             setGameState(produce((s) => Game.setStratagem(s, name))),
     };
 }

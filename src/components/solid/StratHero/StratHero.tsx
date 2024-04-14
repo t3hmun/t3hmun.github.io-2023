@@ -18,7 +18,7 @@ export function StratHero() {
                         each={
                             Object.keys(
                                 GameConsts.stratagems,
-                            ) as Array<GameTypes.StratagemName>
+                            ) as Array<GameTypes.StratName>
                         }
                     >
                         {(name) => (

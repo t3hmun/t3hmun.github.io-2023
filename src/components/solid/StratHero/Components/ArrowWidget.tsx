@@ -1,7 +1,7 @@
 /** @jsxImportSource solid-js */
 
 import type { JSX } from "solid-js/jsx-runtime";
-import type { Direction, KeyAttempt } from "../StratHeroTypes";
+import type { Direction, KeyAttempt } from "../GameTypes";
 
 const CharMap: Record<Direction, string> = {
     u: "⇧",
@@ -16,7 +16,7 @@ type ActiveKeyAttemptProps = {
 
 export function ArrowWidget(props: ActiveKeyAttemptProps): JSX.Element {
     let color: string;
-    switch (props.keyAttempt.state) {
+    switch (props.keyAttempt.status) {
         case "success":
             color = "text-green-500";
             break;

@@ -48,13 +48,13 @@ export function StratHero() {
                 <div class="">
                     <div class="flex flex-col mb-6">
                         {Object.keys(filteredStrats()).length === 0 && (
-                            <div class="border-b-yellow-600 border-b-2 text-yellow-600 text-center h-6 mb-2 min-w-max">
+                            <div class="border-b-yellow-600 border-b-2 text-yellow-600 text-center h-6 mb-2">
                                 No strats found
                             </div>
                         )}
                         {Object.keys(filteredStrats()).map((cat) => (
                             <>
-                                <h2 class="border-b-yellow-600 border-b-2 text-yellow-600 text-center h-6 mb-2 min-w-max">
+                                <h2 class="border-b-yellow-600 border-b-2 text-yellow-600 text-center h-6 mb-2">
                                     {cat} Stratagems
                                 </h2>
                                 <div class="flex flex-row flex-wrap">

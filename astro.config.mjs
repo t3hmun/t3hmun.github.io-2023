@@ -2,6 +2,7 @@ import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import preact from "@astrojs/preact";
 import mdx from "@astrojs/mdx";
+import solid from "@astrojs/solid-js";
 import { remarkDarkLightShiki } from "./src/remark/remarkDarkLightShiki";
 
 // https://astro.build/config
@@ -11,5 +12,10 @@ export default defineConfig({
         remarkPlugins: [remarkDarkLightShiki],
         syntaxHighlight: false,
     },
-    integrations: [tailwind(), preact(), mdx()],
+    integrations: [
+        tailwind(),
+        preact({ include: ["**/components/preact/**/*"] }),
+        mdx(),
+        solid({ include: ["**/components/solid/**/*"] }),
+    ],
 });

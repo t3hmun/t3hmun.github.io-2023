@@ -8,5 +8,16 @@
         "editor.formatOnSave": false
     },
     "prettier.documentSelectors": ["**/*.astro"],
-    "cSpell.words": ["consts", "jank", "preact", "shiki"]
+    "cSpell.words": [
+        "arrowdown",
+        "arrowleft",
+        "arrowright",
+        "arrowup",
+        "consts",
+        "Helldivers",
+        "jank",
+        "preact",
+        "shiki",
+        "strat"
+    ]
 }

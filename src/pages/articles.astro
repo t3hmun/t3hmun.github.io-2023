@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import ArchiveLink from "../components/ArchiveLink.astro";
 import Layout from "../layouts/Layout.astro";
+import H1 from "../components/posts/H1.astro";
 
 const showDraftsInDev = true;
 const isDev = import.meta.env.DEV;
@@ -27,13 +28,9 @@ const byYear = years.map((y) => ({
 }));
 ---
 
-<Layout title="Archive">
+<Layout title="Articles">
     <main class="container mx-auto pr-2 pl-2">
-        <h1
-            class="pt-2 pb-8 text-center text-5xl font-semibold dark:text-amber-500"
-        >
-            Archive
-        </h1>
+        <H1>Articles</H1>
         <ul class="mx-auto max-w-4xl">
             {
                 byYear.map((y) => (

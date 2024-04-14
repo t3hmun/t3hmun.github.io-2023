@@ -1,0 +1,309 @@
+{
+    "Mission": [
+        {
+            "name": "Reinforce",
+            "code": ["u", "d", "r", "l", "u"],
+            "category": "Mission"
+        },
+        {
+            "name": "SOS Beacon",
+            "code": ["u", "d", "r", "u"],
+            "category": "Mission"
+        },
+        {
+            "name": "Resupply",
+            "code": ["d", "d", "u", "r"],
+            "category": "Mission"
+        },
+        {
+            "name": "NUX-223 Hellbomb",
+            "code": ["d", "u", "l", "d", "u", "r", "d", "u"],
+            "category": "Mission"
+        },
+        {
+            "name": "SSSD Delivery",
+            "code": ["d", "d", "d", "u", "u"],
+            "category": "Mission"
+        },
+        {
+            "name": "Seismic Probe",
+            "code": ["u", "u", "l", "r", "d", "d"],
+            "category": "Mission"
+        },
+        {
+            "name": "Upload Data",
+            "code": ["d", "d", "u", "u", "u"],
+            "category": "Mission"
+        },
+        {
+            "name": "Eagle Rearm",
+            "code": ["u", "u", "l", "u", "r"],
+            "category": "Mission"
+        },
+        {
+            "name": "SEAF Artillery",
+            "code": ["r", "u", "u", "d"],
+            "category": "Mission"
+        }
+    ],
+    "Backpack": [
+        {
+            "name": "LIFT-850 Jump Pack",
+            "code": ["d", "u", "u", "d", "u"],
+            "category": "Backpack"
+        },
+        {
+            "name": "B-1 Supply Pack",
+            "code": ["d", "l", "d", "u", "u", "d"],
+            "category": "Backpack"
+        },
+        {
+            "name": "LAS-5 \"Guard Dog\" Rover",
+            "code": ["d", "u", "l", "u", "r", "r"],
+            "category": "Backpack"
+        },
+        {
+            "name": "SH-20 Ballistic Shield Backpack",
+            "code": ["d", "l", "d", "d", "u", "l"],
+            "category": "Backpack"
+        },
+        {
+            "name": "SH-32 Shield Generator Pack",
+            "code": ["d", "u", "l", "r", "l", "r"],
+            "category": "Backpack"
+        },
+        {
+            "name": "AR-23 \"Guard Dog\"",
+            "code": ["d", "u", "l", "u", "r", "d"],
+            "category": "Backpack"
+        }
+    ],
+    "Weapon": [
+        {
+            "name": "MG-43 Machine Gun",
+            "code": ["d", "l", "d", "u", "r"],
+            "category": "Weapon"
+        },
+        {
+            "name": "APW-1 Anti-Materiel Rifle",
+            "code": ["d", "l", "r", "u", "d"],
+            "category": "Weapon"
+        },
+        {
+            "name": "M-105 Stalwart",
+            "code": ["d", "l", "d", "u", "u", "l"],
+            "category": "Weapon"
+        },
+        {
+            "name": "EAT-17 Expendable Anti-tank",
+            "code": ["d", "d", "l", "u", "r"],
+            "category": "Weapon"
+        },
+        {
+            "name": "GR-8 Recoilless Rifle",
+            "code": ["d", "l", "r", "r", "l"],
+            "category": "Weapon"
+        },
+        {
+            "name": "FLAM-40 Flamethrower",
+            "code": ["d", "l", "u", "d", "u"],
+            "category": "Weapon"
+        },
+        {
+            "name": "AC-8 Autocannon",
+            "code": ["d", "l", "d", "u", "u", "r"],
+            "category": "Weapon"
+        },
+        {
+            "name": "MG-206 Heavy Machine Gun",
+            "code": ["d", "l", "u", "d", "d"],
+            "category": "Weapon"
+        },
+        {
+            "name": "RS-422 Railgun",
+            "code": ["d", "r", "d", "u", "l", "r"],
+            "category": "Weapon"
+        },
+        {
+            "name": "FAF-14 SPEAR Launcher",
+            "code": ["d", "d", "u", "d", "d"],
+            "category": "Weapon"
+        },
+        {
+            "name": "GL-21 Grenade Launcher",
+            "code": ["d", "l", "u", "l", "d"],
+            "category": "Weapon"
+        },
+        {
+            "name": "LAS-98 Laser Cannon",
+            "code": ["d", "l", "d", "u", "l"],
+            "category": "Weapon"
+        },
+        {
+            "name": "ARC-3 Arc Thrower",
+            "code": ["d", "r", "d", "u", "l", "l"],
+            "category": "Weapon"
+        },
+        {
+            "name": "LAS-99 Quasar Cannon",
+            "code": ["d", "d", "u", "l", "r"],
+            "category": "Weapon"
+        },
+        {
+            "name": "EXO-45 Patriot Exosuit",
+            "code": ["l", "d", "r", "u", "l", "d", "d"],
+            "category": "Weapon"
+        }
+    ],
+    "Orbital": [
+        {
+            "name": "Orbital Gatling Barrage",
+            "code": ["r", "d", "l", "u", "u"],
+            "category": "Orbital"
+        },
+        {
+            "name": "Orbital Airburst Strike",
+            "code": ["r", "r", "r"],
+            "category": "Orbital"
+        },
+        {
+            "name": "Orbital 120MM HE Barrage",
+            "code": ["r", "r", "d", "l", "r", "d"],
+            "category": "Orbital"
+        },
+        {
+            "name": "Orbital 380MM HE Barrage",
+            "code": ["r", "d", "u", "u", "l", "d", "d"],
+            "category": "Orbital"
+        },
+        {
+            "name": "Orbital Walking Barrage",
+            "code": ["r", "d", "r", "d", "r", "d"],
+            "category": "Orbital"
+        },
+        {
+            "name": "Orbital Laser",
+            "code": ["r", "d", "u", "r", "d"],
+            "category": "Orbital"
+        },
+        {
+            "name": "Orbital Railcannon Strike",
+            "code": ["r", "u", "d", "d", "r"],
+            "category": "Orbital"
+        },
+        {
+            "name": "Orbital Precision Strike",
+            "code": ["r", "r", "u"],
+            "category": "Orbital"
+        },
+        {
+            "name": "Orbital Gas Strike",
+            "code": ["r", "r", "d", "r"],
+            "category": "Orbital"
+        },
+        {
+            "name": "Orbital EMS Strike",
+            "code": ["r", "r", "l", "d"],
+            "category": "Orbital"
+        },
+        {
+            "name": "Orbital Smoke Strike",
+            "code": ["r", "r", "d", "u"],
+            "category": "Orbital"
+        }
+    ],
+    "Eagle": [
+        {
+            "name": "Eagle Strafing Run",
+            "code": ["u", "r", "r"],
+            "category": "Eagle"
+        },
+        {
+            "name": "Eagle Airstrike",
+            "code": ["u", "r", "d", "r"],
+            "category": "Eagle"
+        },
+        {
+            "name": "Eagle Cluster Bomb",
+            "code": ["u", "r", "d", "d", "r"],
+            "category": "Eagle"
+        },
+        {
+            "name": "Eagle Napalm Airstrike",
+            "code": ["u", "r", "d", "u"],
+            "category": "Eagle"
+        },
+        {
+            "name": "Eagle Smoke Strike",
+            "code": ["u", "r", "u", "d"],
+            "category": "Eagle"
+        },
+        {
+            "name": "Eagle 110MM Rocket Pods",
+            "code": ["u", "r", "u", "l"],
+            "category": "Eagle"
+        },
+        {
+            "name": "Eagle 500kg Bomb",
+            "code": ["u", "r", "d", "d", "d"],
+            "category": "Eagle"
+        }
+    ],
+    "Defensive": [
+        {
+            "name": "E/MG-101 HMG Emplacement",
+            "code": ["d", "u", "l", "r", "r", "l"],
+            "category": "Defensive"
+        },
+        {
+            "name": "FX-12 Shield Generator Relay",
+            "code": ["d", "d", "l", "r", "l", "r"],
+            "category": "Defensive"
+        },
+        {
+            "name": "A/ARC-3 Tesla Tower",
+            "code": ["d", "u", "r", "u", "l", "r"],
+            "category": "Defensive"
+        },
+        {
+            "name": "MD-6 Anti-Personnel Minefield",
+            "code": ["d", "l", "u", "r"],
+            "category": "Defensive"
+        },
+        {
+            "name": "MD-I4 Incendiary Mines",
+            "code": ["d", "l", "l", "d"],
+            "category": "Defensive"
+        },
+        {
+            "name": "A/MG-43 Machine Gun Sentry",
+            "code": ["d", "u", "r", "r", "u"],
+            "category": "Defensive"
+        },
+        {
+            "name": "A/G-16 Gatling Sentry",
+            "code": ["d", "u", "r", "l"],
+            "category": "Defensive"
+        },
+        {
+            "name": "A/M-12 Mortar Sentry",
+            "code": ["d", "u", "r", "r", "d"],
+            "category": "Defensive"
+        },
+        {
+            "name": "A/AC-8 Autocannon Sentry",
+            "code": ["d", "u", "r", "u", "l", "u"],
+            "category": "Defensive"
+        },
+        {
+            "name": "A/MLS-4X Rocket Sentry",
+            "code": ["d", "u", "r", "r", "l"],
+            "category": "Defensive"
+        },
+        {
+            "name": "A/M-23 EMS Mortar Sentry",
+            "code": ["d", "u", "r", "d", "r"],
+            "category": "Defensive"
+        }
+    ]
+}

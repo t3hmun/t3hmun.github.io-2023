@@ -2,7 +2,6 @@
 
 import { type ComponentProps, For } from "solid-js";
 
-import * as GameConsts from "./GameConsts";
 import * as GameTypes from "./GameTypes";
 import { ArrowWidget } from "./Components/ArrowWidget";
 import { CreateGame } from "./GameSolidAdapter";
@@ -13,27 +12,27 @@ export function StratHero() {
     return (
         <>
             <div class="flex justify-center">
-                <div class="flex flex-row mb-8">
-                    <For
-                        each={
-                            Object.keys(
-                                GameConsts.stratagems,
-                            ) as Array<GameTypes.StratName>
-                        }
-                    >
-                        {(name) => (
-                            <Button
-                                class="mr-2"
-                                onClick={() => {
-                                    setStratagem(name);
-                                }}
-                            >
-                                {name}
-                            </Button>
-                        )}
-                    </For>
+                <div class="flex flex-col mb-6">
+                    {Object.keys(GameTypes.strats).map((cat) => (
+                        <>
+                            <h2>{cat}</h2>
+                            <div class="flex flex-row flex-wrap mb-2">
+                                <For each={GameTypes.strats[cat]}>
+                                    {(strat) => (
+                                        <Button
+                                            class="mr-2 mb-2 h-20 w-32"
+                                            onClick={() => setStratagem(strat)}
+                                        >
+                                            {strat.name}
+                                        </Button>
+                                    )}
+                                </For>
+                            </div>
+                        </>
+                    ))}
                 </div>
             </div>
+
             <div class="flex justify-center">
                 <div class="w-96">
                     <div class="bg-yellow-500 text-slate-900 text-center h-6">

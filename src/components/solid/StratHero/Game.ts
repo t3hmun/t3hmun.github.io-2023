@@ -1,15 +1,14 @@
 /** All the game logic and all code that modifies state. */
 
-import type {
-    StratName,
-    GameState,
-    Direction,
-    Stratagem,
-    KeyAttempt,
-    CompletedAttempt,
-    CompletedKeyAttempt,
+import {
+    type GameState,
+    type Direction,
+    type Stratagem,
+    type KeyAttempt,
+    type CompletedAttempt,
+    type CompletedKeyAttempt,
+    defaultMapping,
 } from "./GameTypes";
-import { defaultMapping, stratagems } from "./GameConsts";
 
 export function initGameState(): GameState {
     return {
@@ -69,7 +68,7 @@ function calc(
     }
     const attempts: Array<KeyAttempt> = [];
     // Loop though stratagem only, extra key presses after a strat is finished are ignored, consistent with the game.)
-    stratagem.directions.forEach((d, i) => {
+    stratagem.code.forEach((d, i) => {
         const key = keys[i];
         if (key === undefined) {
             attempts.push({ expected: d, status: "pending" });
@@ -84,8 +83,8 @@ function calc(
     return attempts;
 }
 
-export function setStratagem(state: GameState, name: StratName) {
-    state.stratagem = stratagems[name];
+export function setStratagem(state: GameState, stratagem: Stratagem) {
+    state.stratagem = stratagem;
     state.keyBuf = [];
-    state.currentAttempt = calc(stratagems[name], []);
+    state.currentAttempt = calc(stratagem, []);
 }

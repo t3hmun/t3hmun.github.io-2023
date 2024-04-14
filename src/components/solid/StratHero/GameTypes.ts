@@ -1,41 +1,32 @@
 export type Direction = "u" | "d" | "l" | "r";
 
-export type StratName =
-    | "Reinforce"
-    | "SOS Beacon"
-    | "Resupply"
-    | "Hell Bomb"
-    | "SSSD Delivery"
-    | "Seismic Probe"
-    | "Upload Data"
-    | "Eagle Rearm"
-    | "SEAF Artillery"
-    | "Eagle Strafing Run"
-    | "Eagle Airstrike"
-    | "Eagle Cluster Bomb"
-    | "Eagle Napalm"
-    | "Eagle 110MM Rocket Pods"
-    | "Eagle 500kg Bomb"
-    | "Quasar Cannon";
+import stratagemsJson from "./strats.json";
 
-export type StratCategory =
-    | "Mission"
-    | "Eagle"
-    | "Orbital"
-    | "Weapon"
-    | "Greens"
-    | "Backpacks";
+export const strats = stratagemsJson as StratagemDataJson;
+
+const u = "u";
+const d = "d";
+const l = "l";
+const r = "r";
+
+export const defaultMapping: KeyMapping = {
+    w: u,
+    s: d,
+    a: l,
+    d: r,
+    ArrowUp: u,
+    ArrowDown: d,
+    ArrowLeft: l,
+    ArrowRight: r,
+};
 
 export type Stratagem = {
-    name: StratName;
-    category: StratCategory;
-    directions: Array<Direction>;
+    name: string;
+    code: Array<Direction>;
+    category: string;
 };
-/** This is a utility to create an dictionary of objects keyed by their name property. */
 
-export type NameMap<Keys extends string> = {
-    [K in Keys]: { name: K } & Stratagem;
-};
+export type StratagemDataJson = Record<string, Array<Stratagem>>;
 
 export type CompletedKeyAttempt = {
     expected: Direction;

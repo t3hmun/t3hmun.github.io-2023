@@ -1,10 +1,5 @@
-/** All the game logic and all code that modifies state.
- * Ideally this would not depend on SolidJs but in order to use a store with fine grained reactivity all state updates need to go though setStore.
- * Could break the dependency by always returning the full state object, then the solid component just overwrites the whole state object, just like in React, but that misses out on what is interesting about solid.
- * In reality none of this matters, the state is so small that any approach will work fine.
- * */
+/** All the game logic and all code that modifies state. */
 
-import { produce, type SetStoreFunction } from "solid-js/store";
 import type {
     StratagemName,
     GameState,
@@ -31,45 +26,38 @@ function lowerIfAlpha(key: string) {
     return isSingleAlpha.test(key) ? key.toLowerCase() : key;
 }
 
-export function pushKey(
-    setGameState: SetStoreFunction<GameState>,
-    key: string,
-) {
+export function pushKey(state: GameState, key: string) {
     const lowerKey = lowerIfAlpha(key);
-    setGameState(
-        produce((s) => {
-            const dir = s.keyMapping[lowerKey];
-            if (dir === undefined || s.stratagem === null) {
-                return;
-            }
+    const dir = state.keyMapping[lowerKey];
+    if (dir === undefined || state.stratagem === null) {
+        return;
+    }
 
-            const keysForCalc = [...s.keyBuf, dir];
-            const keyAttempts = calc(s.stratagem, keysForCalc);
-            const status = keyAttempts.some((a) => a.status === "fail")
-                ? "fail"
-                : keyAttempts.every((a) => a.status === "success")
-                  ? "success"
-                  : "pending";
-            if (status === "pending") {
-                s.keyBuf.push(dir);
-                s.currentAttempt = keyAttempts;
-                return;
-            }
+    const keysForCalc = [...state.keyBuf, dir];
+    const keyAttempts = calc(state.stratagem, keysForCalc);
+    const status = keyAttempts.some((a) => a.status === "fail")
+        ? "fail"
+        : keyAttempts.every((a) => a.status === "success")
+          ? "success"
+          : "pending";
+    if (status === "pending") {
+        state.keyBuf.push(dir);
+        state.currentAttempt = keyAttempts;
+        return;
+    }
 
-            const completed = keyAttempts as Array<CompletedKeyAttempt>;
+    const completed = keyAttempts as Array<CompletedKeyAttempt>;
 
-            s.keyBuf = [];
-            const completedAttempt: CompletedAttempt = {
-                stratagem: s.stratagem,
-                attempts: completed,
-                status,
-            };
-            s.completedAttempts.unshift(completedAttempt);
-            console.log("TODO: Set next stratagem.");
-            const nextStrat = s.stratagem;
-            s.currentAttempt = calc(nextStrat, []);
-        }),
-    );
+    state.keyBuf = [];
+    const completedAttempt: CompletedAttempt = {
+        stratagem: state.stratagem,
+        attempts: completed,
+        status,
+    };
+    state.completedAttempts.unshift(completedAttempt);
+    console.log("TODO: Set next stratagem.");
+    const nextStrat = state.stratagem;
+    state.currentAttempt = calc(nextStrat, []);
 }
 
 function calc(
@@ -96,15 +84,8 @@ function calc(
     return attempts;
 }
 
-export function setStratagem(
-    setGameState: SetStoreFunction<GameState>,
-    name: StratagemName,
-) {
-    setGameState(
-        produce((s) => {
-            s.stratagem = stratagems[name];
-            s.keyBuf = [];
-            s.currentAttempt = calc(stratagems[name], []);
-        }),
-    );
+export function setStratagem(state: GameState, name: StratagemName) {
+    state.stratagem = stratagems[name];
+    state.keyBuf = [];
+    state.currentAttempt = calc(stratagems[name], []);
 }

@@ -40,3 +40,5 @@ export type GameState = {
     currentAttempt: Array<KeyAttempt>;
     completedAttempts: Array<CompletedAttempt>;
 };
+
+export type StateUpdater = (state: GameState) => void;

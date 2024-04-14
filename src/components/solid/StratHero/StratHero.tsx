@@ -1,25 +1,14 @@
 /** @jsxImportSource solid-js */
 
-import { createEffect, type ComponentProps, For } from "solid-js";
-import { useKeyDownEvent } from "@solid-primitives/keyboard";
-import { createStore } from "solid-js/store";
+import { type ComponentProps, For } from "solid-js";
 
-import * as Game from "./Game";
 import * as GameConsts from "./GameConsts";
 import * as GameTypes from "./GameTypes";
 import { ArrowWidget } from "./Components/ArrowWidget";
+import { CreateGame } from "./GameSolidAdapter";
 
 export function StratHero() {
-    const keyDownEvent = useKeyDownEvent();
-    const [gameState, setGameState] = createStore(Game.initGameState());
-
-    createEffect(() => {
-        // This event depends on keyDownEvent and nothing else, the only thing that appends to keyBuf. Other things may wipe it.
-        const e = keyDownEvent();
-        if (!e || e.repeat) return;
-        const key = e.key;
-        Game.pushKey(setGameState, key);
-    });
+    const { state, setStratagem } = CreateGame();
 
     return (
         <>
@@ -36,7 +25,7 @@ export function StratHero() {
                             <Button
                                 class="mr-2"
                                 onClick={() => {
-                                    Game.setStratagem(setGameState, name);
+                                    setStratagem(name);
                                 }}
                             >
                                 {name}
@@ -48,11 +37,11 @@ export function StratHero() {
             <div class="flex justify-center">
                 <div class="w-96">
                     <div class="bg-yellow-500 text-slate-900 text-center h-6">
-                        {gameState.stratagem?.name ??
+                        {state.stratagem?.name ??
                             "Awaiting Stratagem Selection"}
                     </div>
                     <div class="text-center h-12">
-                        <For each={gameState.currentAttempt}>
+                        <For each={state.currentAttempt}>
                             {(keyAttempt) => (
                                 <ArrowWidget keyAttempt={keyAttempt} />
                             )}
@@ -60,7 +49,7 @@ export function StratHero() {
                     </div>
                     <div class="bg-yellow-500 text-slate-900 text-center h-6"></div>
                     <div class="flex flex-col text-center">
-                        <For each={gameState.completedAttempts}>
+                        <For each={state.completedAttempts}>
                             {(completedAttempt) => (
                                 <div>
                                     <For each={completedAttempt.attempts}>

@@ -8,12 +8,13 @@ Ok, not a full re-write, just major version bumps and tidy up. Maybe I'll go the
   - [x] Forget all the other stuff I'm meant to be doing
   - [x] Pick a framework
     - [x] Solid because I've never used it so I'll be really productive.
-  - [ ] Create a solid component
-  - [ ] Figure out how it works
-  - [ ] Read a basic tutorial
-  - [ ] Write code to detect key presses
-  - [ ] Write code to change colors on arrows
-  - [ ] Make game...
+  - [x] Create a solid component
+  - [x] Figure out how it works
+  - [x] Read a basic tutorial
+  - [x] Write code to detect key presses
+  - [x] Write code to change colors on arrows
+  - [x] Make game...
+  - Probably not going to do anymore.
   - [ ] Animate?
   - [ ] Scores
     - [ ] Persist locally

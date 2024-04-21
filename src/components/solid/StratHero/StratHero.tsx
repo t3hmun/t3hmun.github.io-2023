@@ -1,15 +1,22 @@
 /** @jsxImportSource solid-js */
 
-import { type ComponentProps, For, createSignal, createMemo } from "solid-js";
+import {
+    type ComponentProps,
+    For,
+    createSignal,
+    createMemo,
+    Show,
+} from "solid-js";
 
-import * as GameTypes from "./GameTypes";
+import * as GT from "./GameTypes";
 import { ArrowWidget } from "./Components/ArrowWidget";
+import { CurrentStratView } from "./Components/CurrentStratView";
 import { CreateGame } from "./GameSolidAdapter";
 
-function stratFilter(searchText: string): GameTypes.StratagemDataJson {
+function stratFilter(searchText: string): GT.StratagemDataJson {
     searchText = searchText.toLowerCase();
-    const allStrats = GameTypes.strats;
-    const filteredStrats: GameTypes.StratagemDataJson = {};
+    const allStrats = GT.strats;
+    const filteredStrats: GT.StratagemDataJson = {};
     for (const cat in allStrats) {
         const catStrats = allStrats[cat];
         if (!catStrats) continue;
@@ -32,8 +39,45 @@ export function StratHero() {
         <>
             <div class="">
                 <div class="flex justify-center mb-6">
-                    <div class="w-96">
-                        <CurrentStratView state={state} />
+                    <CurrentStratView
+                        runList={state.runList}
+                        runListIndex={state.runListIndex}
+                    />
+                </div>
+                <div class="flex justify-center mb-8">
+                    <div class="">
+                        <div class="flex flex-col text-center">
+                            <For each={state.attempts}>
+                                {(stratAttempt) => (
+                                    <div>
+                                        {stratAttempt.stratagem.name}
+                                        <For each={stratAttempt.attempts}>
+                                            {(keyAttempt) => (
+                                                <ArrowWidget
+                                                    keyAttempt={keyAttempt}
+                                                />
+                                            )}
+                                        </For>
+                                        {stratAttempt.startTime &&
+                                            stratAttempt.endTime && (
+                                                <span
+                                                    class={
+                                                        stratAttempt.status ===
+                                                        "success"
+                                                            ? "text-green-500"
+                                                            : "text-red-500"
+                                                    }
+                                                >
+                                                    {(stratAttempt.endTime?.getTime() -
+                                                        stratAttempt.startTime?.getTime()) /
+                                                        1000}
+                                                    s
+                                                </span>
+                                            )}
+                                    </div>
+                                )}
+                            </For>
+                        </div>
                     </div>
                 </div>
                 <div class="text-center mb-4">
@@ -122,25 +166,6 @@ export function StratHero() {
                     </div>
                 </div>
 
-                <div class="flex justify-center">
-                    <div class="w-96">
-                        <div class="flex flex-col text-center">
-                            <For each={state.runList}>
-                                {(stratAttempt) => (
-                                    <div>
-                                        <For each={stratAttempt.attempts}>
-                                            {(keyAttempt) => (
-                                                <ArrowWidget
-                                                    keyAttempt={keyAttempt}
-                                                />
-                                            )}
-                                        </For>
-                                    </div>
-                                )}
-                            </For>
-                        </div>
-                    </div>
-                </div>
                 <h2 class="text-2xl mt-5 mb-3">What</h2>
                 <p>
                     This is a simple version of the Stratagem Hero mini-game in
@@ -181,28 +206,6 @@ export function StratHero() {
 }
 
 type ButtonProps = ComponentProps<"button"> & {};
-
-function CurrentStratView({ state }: { state: GameTypes.GameState }) {
-    const currentAttempt = createMemo(() => {
-        if (state.runListIndex === null) return null;
-        const current = state.runList[state.runListIndex];
-        return current ?? null;
-    });
-    return (
-        <div class="w-96">
-            <div class="bg-yellow-500 text-slate-900 text-center h-6">
-                {state.runList[state.runListIndex!]?.stratagem.name ??
-                    "Awaiting Stratagem Selection"}
-            </div>
-            <div class="text-center h-12">
-                <For each={currentAttempt()?.attempts}>
-                    {(keyAttempt) => <ArrowWidget keyAttempt={keyAttempt} />}
-                </For>
-            </div>
-            <div class="bg-yellow-500 text-slate-900 text-center h-6"></div>
-        </div>
-    );
-}
 
 function Button({ class: className, children, ...buttonProps }: ButtonProps) {
     return (

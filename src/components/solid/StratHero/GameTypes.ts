@@ -21,9 +21,9 @@ export const defaultMapping: KeyMapping = {
 };
 
 export type Stratagem = {
-    name: string;
-    code: Array<Direction>;
-    category: string;
+    readonly name: string;
+    readonly code: Array<Direction>;
+    readonly category: string;
 };
 
 export type StratagemDataJson = Record<string, Array<Stratagem>>;
@@ -55,6 +55,8 @@ export type StratAttempt = {
     stratagem: Stratagem;
     attempts: Array<KeyAttempt>;
     status: "incomplete" | "success" | "fail";
+    startTime: Date | null;
+    endTime: Date | null;
 };
 
 export type KeyMapping = Record<string, Direction>;
@@ -63,4 +65,5 @@ export type GameState = {
     keyMapping: KeyMapping;
     runListIndex: number | null;
     runList: Array<StratAttempt>;
+    attempts: Array<StratAttempt>;
 };

@@ -20,5 +20,9 @@
         "shiki",
         "strat",
         "strats"
-    ]
+    ],
+    "emmet.includeLanguages": {
+        "javascriptreact": "html",
+        "typescriptreact": "html"
+    }
 }

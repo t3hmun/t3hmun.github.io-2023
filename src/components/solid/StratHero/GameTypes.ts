@@ -28,33 +28,39 @@ export type Stratagem = {
 
 export type StratagemDataJson = Record<string, Array<Stratagem>>;
 
-export type CompletedKeyAttempt = {
+export type SuccessfulKeyAttempt = {
     expected: Direction;
     actual: Direction;
-    status: "success" | "fail";
+    status: "success";
+};
+
+export type FailedKeyAttempt = {
+    expected: Direction;
+    actual: Direction | null;
+    status: "fail";
 };
 
 export type PendingKeyAttempt = {
     expected: Direction;
+    actual: null;
     status: "pending";
 };
 
-export type KeyAttempt = CompletedKeyAttempt | PendingKeyAttempt;
+export type KeyAttempt =
+    | SuccessfulKeyAttempt
+    | FailedKeyAttempt
+    | PendingKeyAttempt;
 
-export type CompletedAttempt = {
+export type StratAttempt = {
     stratagem: Stratagem;
-    attempts: Array<CompletedKeyAttempt>;
-    status: "success" | "fail";
+    attempts: Array<KeyAttempt>;
+    status: "incomplete" | "success" | "fail";
 };
 
 export type KeyMapping = Record<string, Direction>;
 
 export type GameState = {
     keyMapping: KeyMapping;
-    stratagem: Stratagem | null;
-    keyBuf: Array<Direction>;
-    currentAttempt: Array<KeyAttempt>;
-    completedAttempts: Array<CompletedAttempt>;
+    runListIndex: number | null;
+    runList: Array<StratAttempt>;
 };
-
-export type StateUpdater = (state: GameState) => void;

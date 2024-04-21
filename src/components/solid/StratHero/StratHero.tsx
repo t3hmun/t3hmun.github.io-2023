@@ -1,13 +1,6 @@
 /** @jsxImportSource solid-js */
 
-import {
-    type ComponentProps,
-    For,
-    createSignal,
-    createMemo,
-    Show,
-} from "solid-js";
-
+import { type ComponentProps, For, createSignal, createMemo } from "solid-js";
 import * as GT from "./GameTypes";
 import { ArrowWidget } from "./Components/ArrowWidget";
 import { CurrentStratView } from "./Components/CurrentStratView";

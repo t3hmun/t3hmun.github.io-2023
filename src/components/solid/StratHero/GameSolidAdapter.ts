@@ -1,22 +1,25 @@
 import { createStore, produce } from "solid-js/store";
-import * as Game from "./Game";
 import { createEffect } from "solid-js";
 import { useKeyDownEvent } from "@solid-primitives/keyboard";
-import type { StratagemName } from "./GameTypes";
+import * as G from "./Game";
+import * as GT from "./GameTypes";
 
 export function CreateGame() {
-    const [gameState, setGameState] = createStore(Game.initGameState());
+    const [gameState, setGameState] = createStore(G.initGameState());
     const keyDownEvent = useKeyDownEvent();
     createEffect(() => {
         // This event depends on keyDownEvent and nothing else, the only thing that appends to keyBuf. Other things may wipe it.
         const e = keyDownEvent();
         if (!e || e.repeat) return;
         const key = e.key;
-        setGameState(produce((s) => Game.pushKey(s, key)));
+        setGameState(produce((s) => G.pushKey(s, key)));
     });
     return {
         state: gameState,
-        setStratagem: (name: StratagemName) =>
-            setGameState(produce((s) => Game.setStratagem(s, name))),
+        addStrat: (strat: GT.Stratagem) =>
+            setGameState(produce((s) => G.addStrat(s, strat))),
+        removeStrat: (index: number) =>
+            setGameState(produce((s) => G.removeStrat(s, index))),
+        restartRun: () => setGameState(produce(G.restartRun)),
     };
 }

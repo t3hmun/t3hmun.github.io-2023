@@ -1,44 +1,69 @@
 export type Direction = "u" | "d" | "l" | "r";
 
-export type StratagemName = "Resupply" | "Quasar Cannon" | "Reinforce";
+import stratagemsJson from "./strats.json";
+
+export const strats = stratagemsJson as StratagemDataJson;
+
+const u = "u";
+const d = "d";
+const l = "l";
+const r = "r";
+
+export const defaultMapping: KeyMapping = {
+    w: u,
+    s: d,
+    a: l,
+    d: r,
+    ArrowUp: u,
+    ArrowDown: d,
+    ArrowLeft: l,
+    ArrowRight: r,
+};
 
 export type Stratagem = {
-    name: StratagemName;
-    directions: Array<Direction>;
-};
-/** This is a utility to create an dictionary of objects keyed by their name property. */
-
-export type NameMap<Keys extends string> = {
-    [K in Keys]: { name: K } & Stratagem;
+    readonly name: string;
+    readonly code: Array<Direction>;
+    readonly category: string;
 };
 
-export type CompletedKeyAttempt = {
+export type StratagemDataJson = Record<string, Array<Stratagem>>;
+
+export type SuccessfulKeyAttempt = {
     expected: Direction;
     actual: Direction;
-    status: "success" | "fail";
+    status: "success";
+};
+
+export type FailedKeyAttempt = {
+    expected: Direction;
+    actual: Direction | null;
+    status: "fail";
 };
 
 export type PendingKeyAttempt = {
     expected: Direction;
+    actual: null;
     status: "pending";
 };
 
-export type KeyAttempt = CompletedKeyAttempt | PendingKeyAttempt;
+export type KeyAttempt =
+    | SuccessfulKeyAttempt
+    | FailedKeyAttempt
+    | PendingKeyAttempt;
 
-export type CompletedAttempt = {
+export type StratAttempt = {
     stratagem: Stratagem;
-    attempts: Array<CompletedKeyAttempt>;
-    status: "success" | "fail";
+    attempts: Array<KeyAttempt>;
+    status: "incomplete" | "success" | "fail";
+    startTime: Date | null;
+    endTime: Date | null;
 };
 
 export type KeyMapping = Record<string, Direction>;
 
 export type GameState = {
     keyMapping: KeyMapping;
-    stratagem: Stratagem | null;
-    keyBuf: Array<Direction>;
-    currentAttempt: Array<KeyAttempt>;
-    completedAttempts: Array<CompletedAttempt>;
+    runListIndex: number | null;
+    runList: Array<StratAttempt>;
+    attempts: Array<StratAttempt>;
 };
-
-export type StateUpdater = (state: GameState) => void;

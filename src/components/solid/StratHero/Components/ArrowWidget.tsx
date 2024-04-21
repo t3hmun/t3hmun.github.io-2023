@@ -2,6 +2,7 @@
 
 import type { JSX } from "solid-js/jsx-runtime";
 import type { Direction, KeyAttempt } from "../GameTypes";
+import { createMemo } from "solid-js";
 
 const CharMap: Record<Direction, string> = {
     u: "⇧",
@@ -15,20 +16,19 @@ type ActiveKeyAttemptProps = {
 };
 
 export function ArrowWidget(props: ActiveKeyAttemptProps): JSX.Element {
-    let color: string;
-    switch (props.keyAttempt.status) {
-        case "success":
-            color = "text-green-500";
-            break;
-        case "fail":
-            color = "text-red-500";
-            break;
-        default: // "pending"
-            color = "text-gray-500";
-    }
+    const color = createMemo(() => {
+        switch (props.keyAttempt.status) {
+            case "success":
+                return "text-green-500";
+            case "fail":
+                return "text-red-500";
+            default: // "pending"
+                return "text-gray-500";
+        }
+    });
 
     return (
-        <span class={`text-4xl text-center mx-3 ${color} `}>
+        <span class={`text-4xl text-center mx-3 ${color()} `}>
             {CharMap[props.keyAttempt.expected]}
         </span>
     );

@@ -18,6 +18,11 @@
         "jank",
         "preact",
         "shiki",
-        "strat"
-    ]
+        "strat",
+        "strats"
+    ],
+    "emmet.includeLanguages": {
+        "javascriptreact": "html",
+        "typescriptreact": "html"
+    }
 }

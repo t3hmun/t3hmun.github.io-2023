@@ -1,8 +1,5 @@
 {
-    "extends": "astro/tsconfigs/strictest",
-    // https://docs.astro.build/en/guides/typescript/#errors-typing-multiple-jsx-frameworks-at-the-same-time
-    "compilerOptions": {
-        "jsx": "react-jsx",
-        "jsxImportSource": "preact"
-    }
+    "extends": "astro/tsconfigs/strict",
+    "include": [".astro/types.d.ts", "**/*"],
+    "exclude": ["dist"]
 }

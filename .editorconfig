@@ -5,8 +5,11 @@ charset = utf-8
 end_of_line = lf
 insert_final_newline = true
 indent_style = space
-indent_size = 4 # This is odd for js/ts/json, end up fighting anything the generated changes but 4 spaces is nice.
+indent_size = 4
 
 [*.md]
 trim_trailing_whitespace = false
+
+[package.json]
+indent_style = space
 indent_size = 2

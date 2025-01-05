@@ -1,3 +1,11 @@
+# Website 2025
+
+- [x] Upgrade to Astro 5 `npx @astrojs/upgrade`
+- [x] Update all packages without reading changelogs
+- [x] Change formatter to Biome for no real reason
+- [ ] Remove preact because it should be pure js. Preact is only 10kB though.
+
+
 # t3hmun's website re-write 2024
 
 Ok, not a full re-write, just major version bumps and tidy up. Maybe I'll go the whole of 2024 without a full re-write.
@@ -23,6 +31,8 @@ Ok, not a full re-write, just major version bumps and tidy up. Maybe I'll go the
   - [ ] ...
   - [ ] ...
   - [ ] Profit
+  - [x] Abandon
+  - [x] Delete
 
 - [x] Update all the packages
 - [x] Fix stuff that's changed

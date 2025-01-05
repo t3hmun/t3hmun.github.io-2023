@@ -19,9 +19,9 @@
 //    data-title is any text after the lang on the same line, to be used as a title for the code block
 // Removed the async on the plugin because it didn't work (no idea how the original is called).
 
-import { bundledLanguages, getHighlighter, type Highlighter } from "shiki";
+import { bundledLanguages, createHighlighter, type Highlighter } from "shiki";
 import { visit } from "unist-util-visit";
-import { escape } from "html-escaper";
+import { escape as escapeHtml } from "html-escaper";
 
 // Change these 2 consts to customise themes https://github.com/shikijs/shiki/blob/main/docs/themes.md#all-themes
 
@@ -33,7 +33,7 @@ type Theme = {
     shikiTheme: string;
 };
 
-const hl = await getHighlighter({
+const hl = await createHighlighter({
     themes: [darkTheme, lightTheme],
     langs: Object.keys(bundledLanguages),
 });
@@ -41,6 +41,7 @@ const hl = await getHighlighter({
 export function remarkDarkLightShiki() {
     const highlighter = hl;
 
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     return (tree: any) => {
         visit(tree, "code", (node) => {
             let lang: string;
@@ -64,7 +65,7 @@ export function remarkDarkLightShiki() {
 
             // Any text after the language on the open code fence line (```lang text after) gets stored in node.meta.
             // I'm using that data as a custom title for the code block.
-            let title = node.meta ?? lang;
+            const title = node.meta ?? lang;
 
             const light = render(node, hl, lang, title, {
                 name: "dark",
@@ -92,6 +93,7 @@ export function remarkDarkLightShiki() {
  * @returns Syntax highlighted code block html.
  */
 function render(
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
     node: any,
     hl: Highlighter,
     lang: string,
@@ -114,7 +116,7 @@ function render(
         /<pre class="(.*?)shiki(.*?)"/,
         `<pre is:raw data-theme="${
             theme.name
-        }" data-lang="${lang}" data-title="${escape(title)}"}`, // class="$1 $2 if I wanted to preserve the theme name class.
+        }" data-lang="${lang}" data-title="${escapeHtml(title)}"}`, // class="$1 $2 if I wanted to preserve the theme name class.
     );
     // Add "user-select: none;" for "+"/"-" diff symbols
     if (node.lang === "diff") {

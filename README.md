@@ -1,3 +1,7 @@
+# Website 2025
+
+- [ ] Upgrade to Astro 5
+
 # t3hmun's website re-write 2024
 
 Ok, not a full re-write, just major version bumps and tidy up. Maybe I'll go the whole of 2024 without a full re-write.
@@ -23,6 +27,8 @@ Ok, not a full re-write, just major version bumps and tidy up. Maybe I'll go the
   - [ ] ...
   - [ ] ...
   - [ ] Profit
+  - [x] Abandon
+  - [x] Delete
 
 - [x] Update all the packages
 - [x] Fix stuff that's changed
